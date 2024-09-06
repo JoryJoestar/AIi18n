@@ -1,0 +1,35 @@
+{
+  "name": "vue-electron-vite-fastapi",
+  "version": "0.1.0",
+  "description": "Use AI to help your product go global.",
+  "main": "build/electron/main.js",
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "start": "node scripts/build.js && electron-forge start",
+    "build": "node scripts/build.js && electron-builder",
+    "build:win": "node scripts/build.js && electron-builder --win",
+    "build:mac": "node scripts/build.js && electron-builder --mac",
+    "build:linux": "node scripts/build.js && electron-builder --linux",
+    "electron:fix":"electron-fix start"
+  },
+  "author": "iamyb",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "chalk": "^4.1.2",
+    "chokidar": "^3.6.0",
+    "electron": "^28.2.1",
+    "electron-builder": "^24.12.0",
+    "typescript": "^5.3.3",
+    "vite": "^4.5.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "tree-kill": "^1.2.2"
+  }
+}

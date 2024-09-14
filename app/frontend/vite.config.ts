@@ -24,12 +24,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${pathSrc}/`,
+      '@/': `${pathSrc}/`,
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "~/assets/styles/index.scss" as *;`,
+        additionalData: `@use "~/assets/styles/var.scss" as *;`,
       },
     },
   },

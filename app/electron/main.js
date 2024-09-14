@@ -35,17 +35,19 @@ function startFastAPI() {
 function createWindow() {
   const mainWindow = new BrowserWindow({
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
     }
   })
   mainWindow.setMenuBarVisibility(false)
   if (process.env.NODE_ENV === 'development') {
     const rendererPort = process.argv[2];
     mainWindow.loadURL(`http://localhost:${rendererPort}`);
+    mainWindow.openDevTools();
   } else {
     mainWindow.loadFile(path.join(__dirname, '../frontend/index.html'))
     startFastAPI()
   }
+
 }
 
 const stopFastAPI = () => {

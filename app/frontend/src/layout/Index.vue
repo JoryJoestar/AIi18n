@@ -2,6 +2,7 @@
 import Header from './Header.vue'
 import Main from './Main.vue'
 import Footer from './Footer.vue'
+import Sidebar from './Sidebar.vue';
 
 
 </script>
@@ -15,6 +16,7 @@ import Footer from './Footer.vue'
             <div class="g-polygon-3"></div>
         </div>
         
+        <Sidebar />
         <Header />
         <Main />
         <Footer />

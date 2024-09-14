@@ -43,7 +43,7 @@ function createWindow() {
     const rendererPort = process.argv[2];
     mainWindow.loadURL(`http://localhost:${rendererPort}`);
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../client/index.html'))
+    mainWindow.loadFile(path.join(__dirname, '../frontend/index.html'))
     startFastAPI()
   }
 }

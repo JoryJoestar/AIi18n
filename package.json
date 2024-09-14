@@ -1,5 +1,5 @@
 {
-  "name": "vue-electron-vite-fastapi",
+  "name": "AIi18n",
   "version": "0.1.0",
   "description": "Use AI to help your product go global.",
   "main": "build/electron/main.js",
@@ -12,7 +12,7 @@
     "build:linux": "node scripts/build.js && electron-builder --linux",
     "electron:fix":"electron-fix start"
   },
-  "author": "iamyb",
+  "author": "JORY",
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^7.2.0",

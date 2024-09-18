@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import Header from './Header.vue'
 import Main from './Main.vue'
-import Footer from './Footer.vue'
 import Sidebar from './Sidebar.vue';
 
 
@@ -15,12 +13,19 @@ import Sidebar from './Sidebar.vue';
             <div class="g-polygon-2"></div>
             <div class="g-polygon-3"></div>
         </div>
-        
-        <Sidebar />
-        <Header />
-        <Main />
-        <Footer />
+
+        <div class="body">
+            <Sidebar />
+            <Main />
+        </div>
+
     </div>
 </template>
 
-<style></style>
+<style lang="scss">
+.body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+</style>

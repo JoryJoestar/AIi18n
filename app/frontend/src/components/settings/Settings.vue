@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 import SettingsModel from '@/components/settings/SettingsModel.vue';
 import SettingsGeneral from '@/components/settings/SettingGeneral.vue';
@@ -7,14 +7,39 @@ import { useAppStore } from '~/stores/appStore';
 
 const appStore = useAppStore();
 
-const component = ref<any>(SettingsGeneral);
-const switchComponent = (tab: string) => {
-    if (tab === 'general') {
-        component.value = SettingsGeneral;
-    } else if (tab === 'model') {
-        component.value = SettingsModel;
+const settingsTree = [
+    {
+        name: 'General',
+        icon: 'general',
+        component: SettingsGeneral
+    },
+    {
+        name: 'Model',
+        icon: 'model',
+        component: SettingsModel
+    }
+]
+
+const curSettings = ref<string>('General')
+const component = reactive(SettingsGeneral);
+const switchComponent = (item: any) => {
+    curSettings.value = item.name;
+    component.value = item.component;
+};
+
+const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+        appStore.settingsSwitch = false; // 按下 Esc 键时关闭设置界面
     }
 };
+
+onMounted(() => {
+    window.addEventListener('keydown', handleKeydown);
+    // 清理事件监听器
+    return () => {
+        window.removeEventListener('keydown', handleKeydown);
+    };
+});
 
 </script>
 
@@ -23,9 +48,14 @@ const switchComponent = (tab: string) => {
         <div class="settings-bg"></div>
         <div class="settings-body">
             <div class="settings-body-sidebar">
-                <div class="settings-body-sidebar-header"></div>
+                <div class="settings-body-sidebar-header">
+                    Settings
+                </div>
                 <div class="settings-body-sidebar-main">
-
+                    <div :class="{ 'active': item.name === curSettings }" class="settings-body-sidebar-main-item"
+                        v-for="item, index in settingsTree" :key="index" @click="switchComponent(item)">
+                        {{ item.name }}
+                    </div>
                 </div>
             </div>
             <div class="settings-body-main">
@@ -61,14 +91,51 @@ const switchComponent = (tab: string) => {
 
     &-body {
         $size: 10rem;
-        padding: .75rem;
         position: absolute;
         z-index: 2;
         border-radius: .5rem;
         width: calc(4 * $size);
         height: calc(3 * $size);
         background-color: white;
-        border: 1px solid beige;
+        display: flex;
+
+        &-sidebar {
+            padding: .75rem;
+            width: 10rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #e1e1e1;
+            box-sizing: border-box;
+
+            &-header {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            &-main {
+                &-item {
+                    margin: .25rem 0;
+                    padding: .25rem .75rem;
+                    border-radius: .25rem;
+                    cursor: pointer;
+                    transition: all .15s ease-in-out;
+
+                    &:hover {
+                        background: #efefef;
+                    }
+                }
+
+                &-item.active {
+                    color: white;
+                    background: #555555;
+                }
+
+            }
+        }
+
+        &-main {
+            padding: .75rem;
+        }
     }
 
     &-close {
@@ -79,12 +146,10 @@ const switchComponent = (tab: string) => {
         transition: all .15s ease-in-out;
         border-radius: .5rem;
         cursor: pointer;
-    }
 
-    &-close:hover {
-        color: white;
-        background-color: rgba(0, 0, 0, 0.75);
+        &:hover {
+            background: #efefef;
+        }
     }
-
 }
 </style>

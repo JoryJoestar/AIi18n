@@ -8,25 +8,6 @@ const fastapiAppUrl = 'http://127.0.0.1:8888'
 
 let fastApiProcess = null
 
-async function handleFileOpenBackend(filePath) {
-  const res = await fetchWrapper.post(
-    fastapiAppUrl + '/dir',
-    { fileName: filePath }
-  )
-  const fileInfo = await res.json()
-  return fileInfo
-}
-
-async function handleFileOpen() {
-  const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ['openDirectory'] })
-  if (!canceled) {
-    const { fileInfo } = await handleFileOpenBackend(filePaths[0])
-    // console.log({path: filePaths[0], info: fileInfo})
-    return { path: filePaths[0], info: fileInfo }
-  }
-  return {}
-}
-
 function startFastAPI() {
   fastApiProcess = require('child_process').spawn(
     path.join(__dirname, '../../build/backend/main/main'), { windowsHide: true })
@@ -34,8 +15,8 @@ function startFastAPI() {
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 1280, // 设置窗口宽度
-    height: 960, // 设置窗口高度
+    width: 1120, // 设置窗口宽度
+    height: 800, // 设置窗口高度
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     }
@@ -63,8 +44,6 @@ const stopFastAPI = () => {
 app.on('before-quit', stopFastAPI)
 
 app.whenReady().then(() => {
-  ipcMain.handle("config:getBackendUrl", () => fastapiAppUrl);
-  ipcMain.handle('dialog:openFile', handleFileOpen)
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

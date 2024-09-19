@@ -34,6 +34,8 @@ function startFastAPI() {
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
+    width: 1280, // 设置窗口宽度
+    height: 960, // 设置窗口高度
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     }

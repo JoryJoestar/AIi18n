@@ -17,3 +17,9 @@ AIi18n is a tool that helps you translate your product into multiple languages u
 pyinstaller -F main.py
 
 ```
+
+## RoadMap
+
+- [] 
+- [] 
+- []

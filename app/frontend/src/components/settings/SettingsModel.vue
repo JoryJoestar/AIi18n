@@ -3,8 +3,8 @@
 </script>
 
 <template>
-    <div class="library">
-        library
+    <div class="settings-model">
+        model
     </div>
 </template>
 

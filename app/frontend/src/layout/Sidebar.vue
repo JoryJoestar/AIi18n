@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useAppStore } from '~/stores/appStore';
 
+const appStore = useAppStore();
 
 const main_menu_items = [
     {
-        name: "Home",
-        icon: "home",
+        name: "Translate",
+        icon: "translate",
         link: "/"
     },
     {
@@ -20,7 +23,12 @@ const main_menu_items = [
     },
 ]
 
+const route = useRoute()
 const router = useRouter()
+
+const routeTo = (item: any) => {
+    router.push(item.link)
+}
 
 </script>
 
@@ -31,67 +39,78 @@ const router = useRouter()
                 AIi18n
             </div>
             <div class="sidebar-header-toggle">
-
+                
             </div>
         </header>
         <nav class="sidebar-main">
-            <div class="sidebar-main-menu-item" v-for="item, index in main_menu_items" :key="index"
-                @click="router.push(item.link)">
+            <div :class="{'active': route.path === item.link}" class="sidebar-main-menu-item" v-for="item, index in main_menu_items" :key="index"
+                @click="routeTo(item)">
                 {{ item.name }}
             </div>
         </nav>
         <footer class="sidebar-footer">
-            <div class="sidebar-footer-vip sidebar-footer-item">
-                VIP
-            </div>
-            <div class="sidebar-footer-settings sidebar-footer-item">
+            <div class="sidebar-footer-settings sidebar-footer-item" @click="appStore.settingsSwitch = true">
                 Settings
             </div>
+            <Settings v-if="appStore.settingsSwitch"></Settings>
         </footer>
     </div>
 </template>
 
 <style lang="scss">
 .sidebar {
-    width: 10rem;
+    width:25vw;
+    min-width: 10rem;
+    max-widtH: 15rem;
     height: 100%;
     background: rgba(255, 255, 255, 0.75); // 半透明背景
     backdrop-filter: blur(1rem); // 背景模糊效果
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #e1e1e1;
 
     &-header {
-        height: 3rem;
-        padding: .5rem 1rem;
-        border-bottom: 1px solid #e1e1e1;
-        font-size: 1.25rem;
+        height: 4rem;
+        padding: .75rem 1rem;
+        font-size: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
     }
 
     &-main {
+        flex: 1;
         padding: .5rem;
-        height:calc(100vh - 10rem);
+
         &-menu-item {
             display: flex;
             align-items: center;
-            padding: .5rem;
-            margin: .5rem 0;
+            padding: .5rem .75rem;
+            margin: .25rem 0;
             border-radius: 5px;
-            transition: all .2s ease-in-out;
+            transition: all .15s ease-in-out;
             cursor: pointer;
 
             &:hover {
                 background: #efefef;
             }
         }
+
+        &-menu-item.active {
+            background: #555555;
+            color: white;
+        }
     }
 
     &-footer {
-        padding: .5rem 1rem;
-        border-top: 1px solid #e1e1e1;
-        bottom:0;
+        padding: .5rem;
 
         &-item {
+            width: 100%;
             display: flex;
             align-items: center;
-            padding: .5rem;
+            padding: .5rem .75rem;
             border-radius: 5px;
             transition: all .2s ease-in-out;
             cursor: pointer;

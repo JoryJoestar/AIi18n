@@ -28,8 +28,8 @@ const routes: Array<RouteRecordRaw> = [
     children:[
       {
         path:'/',
-        name:'home',
-        component:()=>import('@/views/Home.vue')
+        name:'translate',
+        component:()=>import('@/views/Translate.vue')
       },
       {
         path:'/projects',

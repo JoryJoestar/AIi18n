@@ -8,11 +8,11 @@ import Sidebar from './Sidebar.vue';
 <template>
     <div class="default-layout">
 
-        <div class="g-bg">
+        <!-- <div class="g-bg">
             <div class="g-polygon-1"></div>
             <div class="g-polygon-2"></div>
             <div class="g-polygon-3"></div>
-        </div>
+        </div> -->
 
         <div class="body">
             <Sidebar />

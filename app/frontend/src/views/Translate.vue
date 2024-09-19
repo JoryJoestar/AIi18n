@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="home">
+    <div class="translate">
         World, Hello!
     </div>
 </template>

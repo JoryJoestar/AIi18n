@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, shallowRef } from 'vue';
 
 import SettingsModel from '@/components/settings/SettingsModel.vue';
 import SettingsGeneral from '@/components/settings/SettingGeneral.vue';
@@ -21,7 +21,7 @@ const settingsTree = [
 ]
 
 const curSettings = ref<string>('General')
-const component = reactive(SettingsGeneral);
+const component = shallowRef(SettingsGeneral);
 const switchComponent = (item: any) => {
     curSettings.value = item.name;
     component.value = item.component;
@@ -134,6 +134,7 @@ onMounted(() => {
         }
 
         &-main {
+            flex: 1;
             padding: .75rem;
         }
     }

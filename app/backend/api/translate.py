@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 @translate_router.post("/translate")
 def translate(translate_params: TranslateParams):
     
-    logger.info('params: %s', translate_params)  # 使用 logging
+    # logger.info('params: %s', translate_params)  # 使用 logging
     
     response = translate_query(translate_params)
     

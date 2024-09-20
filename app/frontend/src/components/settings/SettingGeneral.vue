@@ -4,7 +4,8 @@
 
 <template>
     <div class="settings-general">
-        general
+        <div class="settings-general-header"></div>
+        <div class="settings-general-main"></div>
     </div>
 </template>
 

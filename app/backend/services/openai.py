@@ -3,12 +3,13 @@ from dotenv import load_dotenv
 import time
 import openai
 import logging
-import requests
 
 # 配置 logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:7890'
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:7890'
 
 class ClientOpenAI:
     def query(self, messages):
@@ -60,5 +61,4 @@ class ClientOpenAI:
         OPENAI_BASE_API_URL = f'https://{OPENAI_HOST}/v1/'
 
         self.client.api_key = OPENAI_API_KEY
-        self.client.base_url = OPENAI_BASE_API_URL
-    
+        # self.client.base_url = OPENAI_BASE_API_URL

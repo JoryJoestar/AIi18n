@@ -2,13 +2,20 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import importlib
+import logging
 
 from services import openai
 from schemas.translate import TranslateParams
 
+# 配置 logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 def translate_query(translateParams: TranslateParams):
     # 获取 openAI
     client = openai.ClientOpenAI()
+    
+    logger.info('OpenAI: %s',client.client.base_url)
     # 获取 prompt 版本模块
     prompt_module_path = f'services.prompt.{ translateParams.prompt_version }.prompt'
     prompt = importlib.import_module(prompt_module_path)

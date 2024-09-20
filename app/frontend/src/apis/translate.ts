@@ -1,7 +1,7 @@
-import { useRequest } from '@/hooks/useRequest';
+import { useRequest } from '~/hooks/useRequest';
 
 const { fetchData } = useRequest<TranslateResponse>();
-    
+
 export const translate = async (params: TranslateParams) => {
     return fetchData("/translate", {
         method: "POST",

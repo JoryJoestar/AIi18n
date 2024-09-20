@@ -43,7 +43,6 @@ function startBackend() {
         if (data == EOL) {
             return;
         }
-
         process.stdout.write(Chalk.blueBright(`[backend] `) + Chalk.white(data.toString()))
     });
 
@@ -129,10 +128,10 @@ function copy(path) {
 
 function stop() {
     viteServer.close();
-    if(backendProcess) {
+    if (backendProcess) {
         treeKill(backendProcess.pid)
     }
-    if(electronProcess){
+    if (electronProcess) {
         treeKill(electronProcess.pid)
     }
     process.exit();

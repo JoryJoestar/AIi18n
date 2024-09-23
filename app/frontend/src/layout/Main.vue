@@ -25,5 +25,7 @@ const key = computed(() => {
 </template>
 
 <style>
-
+.app-main {
+    flex: 1;
+}
 </style>

@@ -59,6 +59,6 @@ class ClientOpenAI:
         OPENAI_HOST = 'openai-proxy-0920.deno.dev'
 
         OPENAI_BASE_API_URL = f'https://{OPENAI_HOST}/v1/'
-
+        
         self.client.api_key = OPENAI_API_KEY
         # self.client.base_url = OPENAI_BASE_API_URL

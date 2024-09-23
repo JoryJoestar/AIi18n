@@ -80,19 +80,20 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    z-index: 998;
+    
     &-bg {
         position: relative;
         width: 100%;
         height: 100%;
         background-color: rgb(0, 0, 0, .5);
-        z-index: 1;
+        z-index: 998;
     }
 
     &-body {
         $size: 10rem;
         position: absolute;
-        z-index: 2;
+        z-index: 999;
         border-radius: .5rem;
         width: calc(4 * $size);
         height: calc(3 * $size);

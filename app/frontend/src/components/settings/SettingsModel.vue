@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
+
 
 const openai_models = {
     "name": "OpenAI",
     "icon": "https://openai.com/favicon.ico",
+    "api_key": "",
     "list": [
         {
             "name": "GPT 4o Mini",
@@ -14,6 +17,7 @@ const openai_models = {
 
 const google_models = {
     "name": "Gemini",
+    "api_key": "",
     "icon": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
     "list": [
         {
@@ -31,6 +35,7 @@ const google_models = {
 
 const anthropic_models = {
     "name": "Anthropic",
+    "api_key": "",
     "icon": "https://claude.ai/favicon.ico",
     "list": [
         {
@@ -40,19 +45,18 @@ const anthropic_models = {
     ]
 }
 
-
-const models = [
+const models = ref([
     openai_models,
     google_models,
     anthropic_models
-]
+])
 
 </script>
 
 <template>
     <div class="settings-model">
         <div class="settings-model-header">
-            Model
+
         </div>
         <div class="settings-model-main">
             <div class="settings-model-main-item" v-for="platform, index in models" :key="index">
@@ -61,9 +65,13 @@ const models = [
                         <img class="settings-model-main-item-body-title-icon" :src="platform.icon" alt="">
                         <div class="settings-model-main-item-body-title-name">{{ platform.name }}</div>
                     </div>
-                    <div class="settings-model-main-item-body-setup">
-                        API-KEY Set Up
+                    <div class="settings-model-main-item-body-apikey">
+                        <span :class="{ 'set': platform.api_key !== '' }">API-KEY</span>
+                        <div class="settings-model-main-item-body-apikey-setup">
+                            Set Up
+                        </div>
                     </div>
+
                 </div>
                 <div class="settings-model-main-item-models">
                     <div class="settings-model-main-item-models-item" v-for="model, index in platform.list"
@@ -81,8 +89,7 @@ const models = [
     width: 100%;
 
     &-header {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2.5rem;
     }
 
     &-main {
@@ -112,17 +119,47 @@ const models = [
 
                 }
 
-                &-setup {
-                    font-size: .8rem;
-                    background-color: rgba(0, 0, 0, 0.75);
-                    color: white;
+                &-apikey {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
                     padding: .5rem .75rem;
+                    border: 1px solid rgba(0, 0, 0, 0.25);
                     border-radius: .5rem;
-                    cursor: pointer;
-                    transition: all .15s ease-in-out;
-                }
-                &-setup:hover {
-                    background-color: rgba(0, 0, 0, 0.6);
+
+                    span {
+                        font-size: .75rem;
+                        margin-bottom: .25rem;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    span::before {
+                        content: "";
+                        width: .6rem;
+                        height: .6rem;
+                        background-color: rgba(0, 0, 0, 0.25);
+                        border-radius: .5rem;
+                        margin-right: .5rem;
+                    }
+
+                    span.set::before {
+                        background-color: rgb(54, 230, 54);
+                    }
+
+                    &-setup {
+                        font-size: .8rem;
+                        background-color: rgba(0, 0, 0, 0.75);
+                        color: white;
+                        padding: .25rem 1.25rem;
+                        border-radius: .5rem;
+                        cursor: pointer;
+                        transition: all .15s ease-in-out;
+                    }
+
+                    &-setup:hover {
+                        background-color: rgba(0, 0, 0, 0.6);
+                    }
                 }
             }
         }

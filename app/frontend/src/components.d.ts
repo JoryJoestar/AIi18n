@@ -7,7 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    LanguageSelector: typeof import('./components/LanguageSelector.vue')['default']
+    LanguageSelector: typeof import('./components/translate/LanguageSelector.vue')['default']
     Message: typeof import('./components/Message.vue')['default']
     ProjectsSidebar: typeof import('./components/projects/ProjectsSidebar.vue')['default']
     SelectLangs: typeof import('./components/translate/SelectLangs.vue')['default']

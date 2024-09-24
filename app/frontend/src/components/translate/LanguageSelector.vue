@@ -2,6 +2,10 @@
 import { ref, computed } from 'vue';
 import languages from '~/assets/data/languages.json'; // 确保路径正确
 
+const props = defineProps<{
+    selectedLanguage: string; // 接收已选择的语言
+}>();
+
 const searchQuery = ref('');
 const selectedLanguage = ref<Language>();
 
@@ -28,8 +32,7 @@ const selectLanguage = (language: Language) => {
         <input type="text" v-model="searchQuery" placeholder="Search languages..." class="search-input" />
         <ul class="language-list">
             <li v-for="language in filteredLanguages" :key="language.code">
-                <div @click="selectLanguage(language)"
-                    :class="{ selected: selectedLanguage && selectedLanguage.code === language.code }">
+                <div @click="selectLanguage(language)" :class="{ selected: props.selectedLanguage === language.code }">
                     {{ language['zh-name'] }} ({{ language['code'] }})
                 </div>
             </li>

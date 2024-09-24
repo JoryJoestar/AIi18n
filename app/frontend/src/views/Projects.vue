@@ -11,7 +11,9 @@
             <div class="translate-header-title">
                 Projects
             </div>
-            <div class="translate-header-breadcrumb"></div>
+            <div class="translate-header-breadcrumb">
+                
+            </div>
         </header>
         <main class="projects-main">
 

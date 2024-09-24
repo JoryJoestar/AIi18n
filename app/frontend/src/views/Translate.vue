@@ -19,6 +19,7 @@ const messageCloseButtonVisible = ref<boolean>(false);
 
 const showLanguageSelector = ref(false); // 控制语言选择框的显示
 const languageSelector = ref<string>('') // 什么来源选择语言 Source or Target
+const selected_language = ref<string>('')
 
 const clearSourceText = () => {
     tranlsate_source_text.value = '';
@@ -72,12 +73,20 @@ const translateFetch = () => {
 };
 
 const toggleLanguageSelector = (whichSelect: string) => {
-    showLanguageSelector.value = !showLanguageSelector.value; // 切换语言选择框的显示状态
-
-    if (showLanguageSelector.value) {
-        languageSelector.value = whichSelect
+    if (showLanguageSelector.value && languageSelector.value === whichSelect) {
+        // 如果选择框已经打开且点击的是同一个语言选择器，则关闭选择框
+        showLanguageSelector.value = false;
+        languageSelector.value = '';
     } else {
-        languageSelector.value = ''
+        // 否则打开选择框并设置当前选择的语言
+        showLanguageSelector.value = true;
+        languageSelector.value = whichSelect;
+    }
+
+    if (whichSelect === 'source') {
+        selected_language.value = translate_source_language.value;
+    } else {
+        selected_language.value = translate_target_language.value;
     }
 };
 
@@ -158,7 +167,8 @@ onBeforeUnmount(() => {
 
                         <!-- 语言选择框 -->
                         <LanguageSelector class="language-selector" v-if="showLanguageSelector"
-                            @language-selected="updateSourceLanguage" @close="showLanguageSelector = false" />
+                            @language-selected="updateSourceLanguage" :selected-language="selected_language"
+                            @close="showLanguageSelector = false" />
                     </div>
 
                     <div class="translate-main-tools-left-start" @click="translateFetch">

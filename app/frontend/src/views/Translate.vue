@@ -2,37 +2,58 @@
 import { ref } from 'vue';
 import { translate } from '~/apis/translate';
 
-const translate_content = ref<string>(''); // 翻译内容
-
 const tranlsate_source_text = ref<string>('');
-const translate_source_language = ref<string>('zh-CN');
-const translate_target_language = ref<string>('en-US')
+const translate_source_language = ref<string>('en-US');
+const translate_target_language = ref<string>('zh-CN')
+const translate_target_text = ref<string>(''); // 翻译内容
 
-const sourceInputValue = (event: InputEvent) => {
-    console.log(event)
-    // tranlsate_source_text.value = event.data
-}
+const messageVisible = ref(false);
+const messageContent = ref(''); // 用于存储消息内容
+const messageDuration = ref(0);
+const messageType = ref<string>('info');
+const messageCloseButtonVisible = ref<boolean>(false);
 
 const clearSourceText = () => {
     tranlsate_source_text.value = '';
 };
 
+const showMessage = (msg: string, duration: number, type: string) => {
+    messageContent.value = msg;
+    messageDuration.value = duration;
+    messageType.value = type;
+    messageVisible.value = true;
+    messageCloseButtonVisible.value = false;
+};
+
 const copySourceText = () => {
-    navigator.clipboard.writeText(tranlsate_source_text.value);
+    navigator.clipboard.writeText(tranlsate_source_text.value).then(() => {
+        showMessage('Success', 2000, 'success'); // 显示消息
+    });
+
+};
+const copyTargetText = () => {
+    navigator.clipboard.writeText(translate_target_text.value).then(() => {
+        showMessage('Success', 2000, 'success'); // 显示消息
+    });
 };
 
 const translateFetch = () => {
+    if (tranlsate_source_text.value.trim() === '') {
+        showMessage('Source text cannot be empty!', 2000, 'error'); // 弹出提示
+        return; // 退出函数，不进行翻译
+    }
+
     const params: TranslateParams = {
-        source_text: 'hello world',
-        source_language: 'en-US',
-        target_language: 'zh-CN',
+        source_text: tranlsate_source_text.value,
+        source_language: translate_source_language.value,
+        target_language: translate_target_language.value,
         prompt_version: 'v2',
         replacement: []
     }
     translate(params).then(res => {
         console.log(res)
         if (res.code === 200) {
-            translate_content.value = res.data.translate_content; // 更新翻译内容
+            translate_target_text.value = res.data.translate_content; // 更新翻译内容
         }
     })
 };
@@ -74,33 +95,39 @@ const translateFetch = () => {
 
                 <div class="translate-main-tools-right"></div>
             </div>
+            <div class="translate-main-container">
+                <div class="translate-main-source">
+                    <textarea class="translate-main-source-input" placeholder="source text..."
+                        v-model="tranlsate_source_text" @keydown.enter="translateFetch"></textarea>
+                    <div class="translate-main-source-more">
+                        <div class="translate-main-source-more-left">
+                            <div class="translate-main-source-more-left-clear" @click="clearSourceText">CLEAR</div>
 
-            <div class="translate-main-source">
-                <textarea class="translate-main-source-input" placeholder="source text..."
-                    v-model="tranlsate_source_text"></textarea>
-                <div class="translate-main-source-more">
-                    <div class="translate-main-source-more-left">
-                        <div class="translate-main-source-more-left-clear" @click="clearSourceText">CLEAR</div>
-
+                        </div>
+                        <div class="translate-main-source-more-right">
+                            <div class="translate-main-source-more-right-copy" @click="copySourceText">COPY</div>
+                            <div class="translate-main-source-more-right-length">{{ tranlsate_source_text.length }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="translate-main-more-right">
-                        <div class="translate-main-source-more-right-copy" @click="copySourceText">COPY</div>
+                </div>
+
+                <div class="translate-main-target">
+                    <div class="translate-main-target-content">
+                        {{ translate_target_text }}</div>
+                    <div class="translate-main-target-more">
+                        <div class="translate-main-target-more-copy" @click="copyTargetText">COPY</div>
+                        <div class="translate-main-target-more-length">{{ translate_target_text.length }}</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="translate-main-target">
-            <div class="translate-main-target-content">
-                {{ translate_content }}</div>
-            <div class="translate-main-target-more">
-                <div class="translate-main-target-more-copy">COPY</div>
-            </div>
-        </div>
+        <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration" :close-button-visible="messageCloseButtonVisible"
+            @close="messageVisible = false" />
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .translate {
     padding: 1rem;
 
@@ -202,37 +229,43 @@ const translateFetch = () => {
                 }
 
                 &-start {
-                    padding: .5rem 1.25rem;
-                    background-color: rgba(0, 0, 0, 0.75);
+                    padding: .5rem 1rem;
+                    background-color: rgba(0, 0, 0, 0.7);
                     border-radius: .5rem;
                     color: white;
                     cursor: pointer;
-                    transition: all .15 ease-in-out;
+                    transition: all .15s ease-in-out;
                 }
 
                 &-start:hover {
-                    background-color: rgba(0, 0, 0, 1);
+                    background-color: rgba(0, 0, 0, .8);
                 }
             }
         }
 
+        &-container {
+            background: #eeeeee;
+            display: flex;
+            border-radius: .5rem;
+        }
 
         &-source {
-            width: 100%;
+            width: 50%;
             border: 1px solid #eeeeee;
-            padding-bottom: 1.5rem;
-            position: static;
+            padding-bottom: 0.5rem;
+            background-color: white;
+            border-top-left-radius: .5rem;
+            border-bottom-left-radius: .5rem;
 
             &-input {
                 width: 100%;
-                height: 10rem;
+                height: 24rem;
                 resize: none;
-                padding: .5rem 1rem;
+                padding: .5rem .75rem;
+                font-size: .9rem;
             }
 
             &-more {
-                position: absolute;
-                bottom: .5rem;
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
@@ -252,16 +285,52 @@ const translateFetch = () => {
                 }
 
                 &-right {
+                    display: flex;
+                    align-items: center;
+
                     &-copy {
                         cursor: pointer;
                         color: rgba(0, 0, 0, 0.5);
                         transition: all .15s ease-in-out;
+                        margin-right: .5rem;
                     }
 
                     &-copy:hover {
                         color: rgba(0, 0, 0, 1);
                     }
                 }
+            }
+        }
+
+        &-target {
+            flex: 1;
+
+            &-content {
+                width: 100%;
+                height: 24rem;
+                padding: .5rem.75rem;
+                font-size: .9rem;
+                margin-bottom: .5rem;
+            }
+
+            &-more {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                font-size: .8rem;
+                padding: 0 .75rem;
+
+                &-copy {
+                    cursor: pointer;
+                    color: rgba(0, 0, 0, 0.5);
+                    transition: all .15s ease-in-out;
+                    margin-right: .5rem;
+                }
+
+                &-copy:hover {
+                    color: rgba(0, 0, 0, 1);
+                }
+
             }
         }
     }

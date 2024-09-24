@@ -6,12 +6,16 @@ const tranlsate_source_text = ref<string>('');
 const translate_source_language = ref<string>('en-US');
 const translate_target_language = ref<string>('zh-CN')
 const translate_target_text = ref<string>(''); // 翻译内容
+const isTranslating = ref(false); // 新增状态，跟踪翻译是否正在进行
 
 const messageVisible = ref(false);
 const messageContent = ref(''); // 用于存储消息内容
 const messageDuration = ref(0);
 const messageType = ref<string>('info');
 const messageCloseButtonVisible = ref<boolean>(false);
+
+const showLanguageSelector = ref(false); // 控制语言选择框的显示
+const languageSelector = ref<string>('') // 什么来源选择语言 Source or Target
 
 const clearSourceText = () => {
     tranlsate_source_text.value = '';
@@ -27,21 +31,22 @@ const showMessage = (msg: string, duration: number, type: string) => {
 
 const copySourceText = () => {
     navigator.clipboard.writeText(tranlsate_source_text.value).then(() => {
-        showMessage('Success', 2000, 'success'); // 显示消息
+        showMessage('Success', 1500, 'success'); // 显示消息
     });
 
 };
 const copyTargetText = () => {
     navigator.clipboard.writeText(translate_target_text.value).then(() => {
-        showMessage('Success', 2000, 'success'); // 显示消息
+        showMessage('Success', 1500, 'success'); // 显示消息
     });
 };
 
 const translateFetch = () => {
     if (tranlsate_source_text.value.trim() === '') {
-        showMessage('Source text cannot be empty!', 2000, 'error'); // 弹出提示
         return; // 退出函数，不进行翻译
     }
+
+    isTranslating.value = true; // 开始翻译时设置状态
 
     const params: TranslateParams = {
         source_text: tranlsate_source_text.value,
@@ -52,11 +57,47 @@ const translateFetch = () => {
     }
     translate(params).then(res => {
         console.log(res)
+        isTranslating.value = false; // 翻译完成时恢复状态
         if (res.code === 200) {
             translate_target_text.value = res.data.translate_content; // 更新翻译内容
         }
-    })
+    }).catch(() => {
+        isTranslating.value = false; // 处理错误时恢复状态
+        showMessage('Translation failed!', 1500, 'error'); // 显示失败消息
+    });
 };
+
+const toggleLanguageSelector = (whichSelect: string) => {
+    showLanguageSelector.value = !showLanguageSelector.value; // 切换语言选择框的显示状态
+
+    if (showLanguageSelector.value) {
+        languageSelector.value = whichSelect
+    } else {
+        languageSelector.value = ''
+    }
+};
+
+const updateSourceLanguage = (language: Language) => {
+    if (languageSelector.value === 'source') {
+        translate_source_language.value = language.code; // 更新源语言
+    } else if (languageSelector.value === 'target') {
+        translate_target_language.value = language.code; // 更新目标语言
+    }
+
+    showLanguageSelector.value = false; // 选择后关闭选择框
+    languageSelector.value = ''
+};
+
+const exchangeTranslate = () => {
+    const tempSourceLanguage = translate_source_language.value;
+    translate_source_language.value = translate_target_language.value;
+    translate_target_language.value = tempSourceLanguage;
+
+    // 交换源文本和目标文本
+    const tempSourceText = tranlsate_source_text.value;
+    tranlsate_source_text.value = translate_target_text.value;
+    translate_target_text.value = tempSourceText;
+}
 
 </script>
 
@@ -79,17 +120,24 @@ const translateFetch = () => {
             <div class="translate-main-tools">
                 <div class="translate-main-tools-left">
                     <div class="translate-main-tools-left-language">
-                        <div class="translate-main-tools-left-language-source">
+                        <div :class="{ 'selected': languageSelector === 'source' }"
+                            class="translate-main-tools-left-language-source" @click="toggleLanguageSelector('source')">
                             {{ translate_source_language }}
                         </div>
-                        <div class="translate-main-tools-left-language-exchange"><-></div>
-                        <div class="translate-main-tools-left-language-target">
+                        <div class="translate-main-tools-left-language-exchange" @click="exchangeTranslate"><-></div>
+                        <div :class="{ 'selected': languageSelector === 'target' }"
+                            class="translate-main-tools-left-language-target" @click="toggleLanguageSelector('target')">
                             {{ translate_target_language }}
                         </div>
+
+                        <!-- 语言选择框 -->
+                        <LanguageSelector class="language-selector" v-if="showLanguageSelector"
+                            @language-selected="updateSourceLanguage" @close="showLanguageSelector = false" />
                     </div>
 
                     <div class="translate-main-tools-left-start" @click="translateFetch">
-                        START
+                        <div v-if="isTranslating" class="spinner"></div>
+                        <span v-else>START</span>
                     </div>
                 </div>
 
@@ -122,8 +170,8 @@ const translateFetch = () => {
                 </div>
             </div>
         </div>
-        <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration" :close-button-visible="messageCloseButtonVisible"
-            @close="messageVisible = false" />
+        <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration"
+            :close-button-visible="messageCloseButtonVisible" @close="messageVisible = false" />
     </div>
 </template>
 
@@ -159,13 +207,26 @@ const translateFetch = () => {
                     border: 1px solid #eeeeee;
                     border-radius: .5rem;
                     margin-right: 1rem;
+                    position: relative;
+
+                    .language-selector {
+                        position: absolute;
+                        top: 3rem;
+                        left: 0;
+                    }
 
                     &-source {
                         display: flex;
                         align-items: center;
+                        justify-content: center;
                         margin-right: .75rem;
                         cursor: pointer;
                         transition: all .15s ease-in-out;
+                        width: 4rem;
+                    }
+
+                    &-source.selected {
+                        color: green
                     }
 
                     &-source:hover {
@@ -203,9 +264,15 @@ const translateFetch = () => {
                     &-target {
                         display: flex;
                         align-items: center;
+                        justify-content: center;
                         margin-left: .75rem;
                         cursor: pointer;
                         transition: all .15s ease-in-out;
+                        width: 4rem;
+                    }
+
+                    &-target.selected {
+                        color: green
                     }
 
                     &-target:hover {
@@ -230,11 +297,39 @@ const translateFetch = () => {
 
                 &-start {
                     padding: .5rem 1rem;
+                    width: 5rem;
+                    height: 2.3rem;
                     background-color: rgba(0, 0, 0, 0.7);
                     border-radius: .5rem;
                     color: white;
                     cursor: pointer;
                     transition: all .15s ease-in-out;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .spinner {
+                        border: .25rem solid rgba(255, 255, 255, 0.3);
+                        border-top: .25rem solid #ffffff;
+                        /* Spinner color */
+                        border-radius: 50%;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        animation: spin 1s linear infinite;
+                        /* 旋转动画 */
+                        margin-right: 5px;
+                        /* Spinner 和文本之间的间距 */
+                    }
+
+                    @keyframes spin {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
                 }
 
                 &-start:hover {

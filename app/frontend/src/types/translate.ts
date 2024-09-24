@@ -21,3 +21,11 @@ type TranslateResponse = {
         total_tokens: string
     }
 }
+
+type Language = {
+    "local-name": string
+    "zh-name": string
+    "en-name": string
+    "code": string
+    "code-iso639-2": string
+}

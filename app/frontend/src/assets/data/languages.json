@@ -1,0 +1,149 @@
+[
+    {
+        "local-name":"English(US)",
+        "zh-name":"英语(美国)",
+        "en-name":"English(US)",
+        "code":"en-US",
+        "code-iso639-2":"en"
+    },
+    {
+        "local-name": "English(United Kingdom)",
+        "zh-name": "英语(英国)",
+        "en-name": "English(UK)",
+        "code": "en-GB",
+        "code-iso639-2": "en"
+    },
+    {
+        "local-name":"简体中文",
+        "zh-name":"简体中文",
+        "en-name":"Simplified Chinese",
+        "code":"zh-CN",
+        "code-iso639-2":"zh-Hans"
+    },
+    {
+        "local-name":"繁體中文",
+        "zh-name":"繁体中文",
+        "en-name":"Traditional Chinese",
+        "code":"zh-TW",
+        "code-iso639-2":"zh-Hant"
+    },
+    {
+        "local-name":"简体中文(粤语)",
+        "zh-name":"简体中文(粤语)",
+        "en-name":"Simplified Cantonese",
+        "code":"zh-GD",
+        "code-iso639-2":""
+    },
+    {
+        "local-name":"繁體中文(粤语)",
+        "zh-name":"繁体中文(粤语)",
+        "en-name":"Traditional Cantonese",
+        "code":"zh-HK",
+        "code-iso639-2":""
+    },
+    {
+        "local-name":"Français(Franch)",
+        "zh-name":"法语(法国)",
+        "en-name":"French(Franch)",
+        "code":"fr-FR",
+        "code-iso639-2":"fr"
+    },
+    {
+        "local-name": "Français(Canada)",
+        "zh-name": "法语(加拿大)",
+        "en-name": "French(Canada)",
+        "code": "fr-CA",
+        "code-iso639-2": "fr"
+    },
+    {
+        "local-name": "Español(España)",
+        "zh-name": "西班牙语(西班牙)",
+        "en-name": "Spanish(Spain)",
+        "code": "es-ES",
+        "code-iso639-2": "es"
+    },
+    {
+        "local-name": "Deutsch(Germany)",
+        "zh-name": "德语(德国)",
+        "en-name": "German(Germany)",
+        "code": "de-DE",
+        "code-iso639-2": "de"
+    },
+    {
+        "local-name": "Italiano(Italia)",
+        "zh-name": "意大利语(意大利)",
+        "en-name": "Italian(Italy)",
+        "code": "it-IT",
+        "code-iso639-2": "it"
+    },
+    {
+        "local-name": "日本語",
+        "zh-name": "日语",
+        "en-name": "Japanese",
+        "code": "ja-JP",
+        "code-iso639-2": "ja"
+    },
+    {
+        "local-name": "Português(Portugal)",
+        "zh-name": "葡萄牙语(葡萄牙)",
+        "en-name": "Portuguese(Portugal)",
+        "code": "pt-PT",
+        "code-iso639-2": "pt"
+    },
+    {
+        "local-name": "Português(Brasil)",
+        "zh-name": "葡萄牙语(巴西)",
+        "en-name": "Portuguese(Brazil)",
+        "code": "pt-BR",
+        "code-iso639-2": "pt"
+    },
+    {
+        "local-name": "Русский(Россия)",
+        "zh-name": "俄语(俄罗斯)",
+        "en-name": "Russian(Russia)",
+        "code": "ru-RU",
+        "code-iso639-2": "ru"
+    },
+    {
+        "local-name": "العربية(مصر)",
+        "zh-name": "阿拉伯语(埃及)",
+        "en-name": "Arabic(Egypt)",
+        "code": "ar-EG",
+        "code-iso639-2": "ar"
+    },
+    {
+        "local-name": "한국어(대한민국)",
+        "zh-name": "韩语(韩国)",
+        "en-name": "Korean(South Korea)",
+        "code": "ko-KR",
+        "code-iso639-2": "ko"
+    },
+    {
+        "local-name": "Türkçe",
+        "zh-name": "土耳其语",
+        "en-name": "Turkish",
+        "code": "tr-TR",
+        "code-iso639-2": "tr"
+    },
+    {
+        "local-name": "Bahasa Indonesia",
+        "zh-name": "印尼语",
+        "en-name": "Indonesian",
+        "code": "id-ID",
+        "code-iso639-2": "id"
+    },
+    {
+        "local-name": "Nederlands(Nederland)",
+        "zh-name": "荷兰语(荷兰)",
+        "en-name": "Dutch(Netherlands)",
+        "code": "nl-NL",
+        "code-iso639-2": "nl"
+    },
+    {
+        "local-name": "Català",
+        "zh-name": "加泰罗尼亚语",
+        "en-name": "Catalan",
+        "code": "ca-ES",
+        "code-iso639-2": "ca"
+    }
+]

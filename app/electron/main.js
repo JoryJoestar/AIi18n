@@ -15,8 +15,10 @@ function startFastAPI() {
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 1120, // 设置窗口宽度
-    height: 800, // 设置窗口高度
+    width: 1280, // 设置窗口宽度
+    height: 720, // 设置窗口高度
+    minWidth: 800, // 设置最小宽度
+    minHeight: 600, // 设置最小高度
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true, // 允许使用 Node.js

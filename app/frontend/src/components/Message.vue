@@ -12,7 +12,7 @@ const props = defineProps({
     },
     duration: {
         type: Number,
-        default: 2000 // 默认消失时间为3000毫秒
+        default: 1500 // 默认消失时间为3000毫秒
     },
     closeButtonVisible: {
         type: Boolean,
@@ -29,7 +29,7 @@ const close = () => {
     setTimeout(() => {
         visible.value = false; // 在动画结束后隐藏组件
         emit('close'); // 触发关闭事件
-    }, 500); // 动画持续时间
+    }, 300); // 动画持续时间
 };
 
 // 在组件挂载时设置定时器

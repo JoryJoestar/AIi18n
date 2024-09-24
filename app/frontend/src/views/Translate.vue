@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { translate } from '~/apis/translate';
+import { useTranslateStore } from '~/stores/translateStore';
+
+const translateStore = useTranslateStore();
 
 const tranlsate_source_text = ref<string>('');
 const translate_source_language = ref<string>('en-US');
@@ -60,6 +63,7 @@ const translateFetch = () => {
         isTranslating.value = false; // 翻译完成时恢复状态
         if (res.code === 200) {
             translate_target_text.value = res.data.translate_content; // 更新翻译内容
+            translateStore.addHistory(tranlsate_source_text.value, translate_target_text.value, translate_source_language.value, translate_target_language.value, new Date()); // 添加当前时间戳
         }
     }).catch(() => {
         isTranslating.value = false; // 处理错误时恢复状态
@@ -98,6 +102,28 @@ const exchangeTranslate = () => {
     tranlsate_source_text.value = translate_target_text.value;
     translate_target_text.value = tempSourceText;
 }
+
+// 点击外部收起选择框
+const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const languageSelectorElement = document.querySelector('.language-selector');
+    const languageToggleElement = document.querySelector('.translate-main-tools-left-language'); // 语言选择器的父元素
+
+    // 检查点击的目标是否在语言选择框或其父元素内
+    if (languageSelectorElement && !languageSelectorElement.contains(target) &&
+        languageToggleElement && !languageToggleElement.contains(target)) {
+        showLanguageSelector.value = false;
+        languageSelector.value = ''
+    }
+};
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 
 </script>
 
@@ -146,7 +172,7 @@ const exchangeTranslate = () => {
             <div class="translate-main-container">
                 <div class="translate-main-source">
                     <textarea class="translate-main-source-input" placeholder="source text..."
-                        v-model="tranlsate_source_text" @keydown.enter="translateFetch"></textarea>
+                        v-model="tranlsate_source_text"></textarea>
                     <div class="translate-main-source-more">
                         <div class="translate-main-source-more-left">
                             <div class="translate-main-source-more-left-clear" @click="clearSourceText">CLEAR</div>
@@ -169,6 +195,9 @@ const exchangeTranslate = () => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="tranlsate-history">
+            <TranslateHistory></TranslateHistory>
         </div>
         <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration"
             :close-button-visible="messageCloseButtonVisible" @close="messageVisible = false" />
@@ -428,6 +457,10 @@ const exchangeTranslate = () => {
 
             }
         }
+    }
+
+    &-history {
+        margin-top: 1rem;
     }
 }
 </style>

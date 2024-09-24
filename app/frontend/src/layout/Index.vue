@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useAppStore } from '~/stores/appStore';
 import Main from './Main.vue'
 import Sidebar from './Sidebar.vue';
 
+const appStore = useAppStore();
 
 </script>
 
@@ -17,6 +19,7 @@ import Sidebar from './Sidebar.vue';
         <div class="body">
             <Sidebar />
             <Main />
+            <Settings v-if="appStore.settingsSwitch"></Settings>
         </div>
 
     </div>

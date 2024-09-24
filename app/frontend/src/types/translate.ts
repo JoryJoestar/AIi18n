@@ -29,3 +29,11 @@ type Language = {
     "code": string
     "code-iso639-2": string
 }
+
+type historyItem = {
+    sourceText: string;
+    targetText: string;
+    sourceLang: string;
+    targetLang: string;
+    timestamp: Date;
+}

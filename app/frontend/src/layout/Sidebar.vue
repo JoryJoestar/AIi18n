@@ -39,12 +39,12 @@ const routeTo = (item: any) => {
                 AIi18n
             </div>
             <div class="sidebar-header-toggle">
-                
+
             </div>
         </header>
         <nav class="sidebar-main">
-            <div :class="{'active': route.path === item.link}" class="sidebar-main-menu-item" v-for="item, index in main_menu_items" :key="index"
-                @click="routeTo(item)">
+            <div :class="{ 'active': route.path === item.link }" class="sidebar-main-menu-item"
+                v-for="item, index in main_menu_items" :key="index" @click="routeTo(item)">
                 {{ item.name }}
             </div>
         </nav>
@@ -52,16 +52,15 @@ const routeTo = (item: any) => {
             <div class="sidebar-footer-settings sidebar-footer-item" @click="appStore.settingsSwitch = true">
                 Settings
             </div>
-            <Settings v-if="appStore.settingsSwitch"></Settings>
         </footer>
     </div>
 </template>
 
 <style lang="scss">
 .sidebar {
-    width:25vw;
+    width: 15vw;
     min-width: 10rem;
-    max-widtH: 15rem;
+    max-width: 12rem;
     height: 100%;
     background: rgba(255, 255, 255, 0.75); // 半透明背景
     backdrop-filter: blur(1rem); // 背景模糊效果
@@ -105,6 +104,7 @@ const routeTo = (item: any) => {
 
     &-footer {
         padding: .5rem;
+        z-index: 100;
 
         &-item {
             width: 100%;

@@ -3,7 +3,7 @@ const path = require('node:path')
 const { fetchWrapper } = require('./fetchApi.js'); // Adjust the path to your actual file
 const treeKill = require('tree-kill');
 
-const fastapiAppUrl = 'http://127.0.0.1:10000'
+const { fastapiAppUrl, translate } = require('./server.js');
 
 
 let fastApiProcess = null
@@ -49,6 +49,7 @@ app.on('before-quit', stopFastAPI)
 
 app.whenReady().then(() => {
   ipcMain.handle("config:getBackendUrl", () => fastapiAppUrl);
+  ipcMain.handle('function:translate', translate);
 
   createWindow()
 

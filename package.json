@@ -10,7 +10,8 @@
     "build:win": "node scripts/build.js && electron-builder --win",
     "build:mac": "node scripts/build.js && electron-builder --mac",
     "build:linux": "node scripts/build.js && electron-builder --linux",
-    "electron:fix": "electron-fix start"
+    "electron:fix": "electron-fix start",
+    "electron:generate-icons":"electron-icon-builder --input=./app/icon/icon.png --output=build --flatten"
   },
   "author": "JORY",
   "license": "MIT",

@@ -10,8 +10,6 @@ declare module 'vue' {
     LanguageSelector: typeof import('./components/translate/LanguageSelector.vue')['default']
     Message: typeof import('./components/Message.vue')['default']
     ProjectsSidebar: typeof import('./components/projects/ProjectsSidebar.vue')['default']
-    SelectLangs: typeof import('./components/translate/SelectLangs.vue')['default']
-    SelectLanguages: typeof import('./components/SelectLanguages.vue')['default']
     SettingGeneral: typeof import('./components/settings/SettingGeneral.vue')['default']
     Settings: typeof import('./components/settings/Settings.vue')['default']
     SettingsModel: typeof import('./components/settings/SettingsModel.vue')['default']

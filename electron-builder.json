@@ -11,10 +11,15 @@
         "shortcutName": "AIi18n"
     },
     "win": {
-        "target": "nsis"
+        "target": "nsis",
+        "icon": "app/icon/favicon@4x.ico" 
     },
     "linux":  {
-        "target": ["snap"]
+        "target": ["snap"],
+        "icon": "app/icon/favicon@4x.png" 
+    },
+    "mac": {
+        "icon": "app/icon/favicon@4x.icns" 
     },
     "files": [
         "build/electron/**/*",

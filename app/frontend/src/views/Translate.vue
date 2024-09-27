@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { translate } from '~/apis/translate';
 import { useTranslateStore } from '~/stores/translateStore';
+
+const route = useRoute();
 
 const translateStore = useTranslateStore();
 

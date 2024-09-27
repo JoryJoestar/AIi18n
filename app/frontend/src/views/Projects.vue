@@ -1,4 +1,21 @@
-<script lang="ts">
+<script lang="ts" setup>
+
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
+
+const route = useRoute();
+
+const projectsStore = useProjectsStore(); // 创建项目 store 实例
+
+const addProject = () => {
+    const newProject = {
+        id: Date.now(), // 使用当前时间戳作为项目 ID
+        name: `Project ${projectsStore.projects.length + 1}`, // 项目名称
+        // 其他项目属性可以在这里添加
+    };
+    projectsStore.addProject(newProject); // 调用 store 方法添加项目
+};
 
 </script>
 
@@ -12,11 +29,11 @@
                 Projects
             </div>
             <div class="translate-header-breadcrumb">
-                
+
             </div>
         </header>
         <main class="projects-main">
-
+            <button @click="addProject" class="add-project-button">新增项目</button> <!-- 新增项目按钮 -->
         </main>
     </div>
 </template>

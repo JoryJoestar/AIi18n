@@ -48,7 +48,7 @@ const copyTargetText = () => {
     });
 };
 
-const translateFetch = async () => {
+const translateFetch = () => {
     if (tranlsate_source_text.value.trim() === '') {
         return; // 退出函数，不进行翻译
     }
@@ -64,8 +64,17 @@ const translateFetch = async () => {
     }
 
     // @ts-ignore
-    const res = await window.electronAPI.translate(params)
-    console.log(res)
+    window.electronAPI.translate(params).then((res: any) => {
+        isTranslating.value = false;
+        if (res.code === 200) {
+            translate_target_text.value = res.data.translate_content; // 更新翻译内容
+            translateStore.addHistory(tranlsate_source_text.value, translate_target_text.value, translate_source_language.value, translate_target_language.value, new Date()); // 添加当前时间戳
+        }
+    }).catch((err: any) => {
+        isTranslating.value = false; // 处理错误时恢复状态
+        showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
+    });
+
 
     // translate(params).then(res => {
     //     console.log(res)
@@ -74,9 +83,9 @@ const translateFetch = async () => {
     //         translate_target_text.value = res.data.translate_content; // 更新翻译内容
     //         translateStore.addHistory(tranlsate_source_text.value, translate_target_text.value, translate_source_language.value, translate_target_language.value, new Date()); // 添加当前时间戳
     //     }
-    // }).catch(() => {
+    // }).catch((err) => {
     //     isTranslating.value = false; // 处理错误时恢复状态
-    //     showMessage('Translation failed!', 1500, 'error'); // 显示失败消息
+    //     showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
     // });
 };
 

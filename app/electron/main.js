@@ -1,9 +1,8 @@
 const { app, BrowserWindow, ipcMain, ipcRenderer, dialog, session } = require('electron/main')
 const path = require('node:path')
-const { fetchWrapper } = require('./fetchApi.js'); // Adjust the path to your actual file
 const treeKill = require('tree-kill');
 
-const { fastapiAppUrl, translate } = require('./server.js');
+const { translate } = require('./server.js');
 
 
 let fastApiProcess = null
@@ -48,7 +47,6 @@ const stopFastAPI = () => {
 app.on('before-quit', stopFastAPI)
 
 app.whenReady().then(() => {
-  ipcMain.handle("config:getBackendUrl", () => fastapiAppUrl);
   ipcMain.handle('function:translate', translate);
 
   createWindow()

@@ -15,6 +15,10 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有头部
 )
 
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
 app.include_router(translate_router)  # 包含 api 路由
 
 if __name__ == "__main__":

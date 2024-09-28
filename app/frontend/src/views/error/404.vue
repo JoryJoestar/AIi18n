@@ -9,5 +9,7 @@ const route = useRoute();
 <template>
   <div class="404">
     404
+    <a @click="router.push('/')">Home</a>
+    {{ route }}
   </div>
 </template>

@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { translate } from '~/apis/translate';
 import { useTranslateStore } from '~/stores/translateStore';
+import { generateUniqueId } from '~/utils/uuid';
 
 const route = useRoute();
 
@@ -54,8 +55,9 @@ const translateFetch = () => {
     }
 
     isTranslating.value = true; // 开始翻译时设置状态
-
-    const params: TranslateParams = {
+    const translate_uuid = generateUniqueId();
+    const params: TranslateItem = {
+        id: `T${translate_uuid}`,
         source_text: tranlsate_source_text.value,
         source_language: translate_source_language.value,
         target_language: translate_target_language.value,
@@ -63,30 +65,26 @@ const translateFetch = () => {
         replacement: []
     }
 
-    // @ts-ignore
-    window.electronAPI.translate(params).then((res: any) => {
-        isTranslating.value = false;
+    translate(params).then(res => {
+        console.log(res)
+        isTranslating.value = false; // 翻译完成时恢复状态
         if (res.code === 200) {
-            translate_target_text.value = res.data.translate_content; // 更新翻译内容
-            translateStore.addHistory(tranlsate_source_text.value, translate_target_text.value, translate_source_language.value, translate_target_language.value, new Date()); // 添加当前时间戳
+            translate_target_text.value = res.data.translate_content; // 更新翻译内容   
+            const history_uuid = generateUniqueId();
+            let historyData = {
+                id: `h${history_uuid}`,
+                sourceText: tranlsate_source_text.value,
+                targetText: translate_target_text.value,
+                sourceLang: translate_source_language.value,
+                targetLang: translate_target_language.value,
+                timestamp: new Date()
+            }
+            translateStore.addHistory(historyData); // 添加当前时间戳
         }
-    }).catch((err: any) => {
+    }).catch((err) => {
         isTranslating.value = false; // 处理错误时恢复状态
         showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
     });
-
-
-    // translate(params).then(res => {
-    //     console.log(res)
-    //     isTranslating.value = false; // 翻译完成时恢复状态
-    //     if (res.code === 200) {
-    //         translate_target_text.value = res.data.translate_content; // 更新翻译内容
-    //         translateStore.addHistory(tranlsate_source_text.value, translate_target_text.value, translate_source_language.value, translate_target_language.value, new Date()); // 添加当前时间戳
-    //     }
-    // }).catch((err) => {
-    //     isTranslating.value = false; // 处理错误时恢复状态
-    //     showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
-    // });
 };
 
 const toggleLanguageSelector = (whichSelect: string) => {

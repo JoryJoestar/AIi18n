@@ -1,4 +1,5 @@
-type TranslateParams = {
+type TranslateItem = {
+    id: string,
     source_text: string;
     source_language: string;
     target_language: string;
@@ -30,7 +31,8 @@ type Language = {
     "code-iso639-2": string
 }
 
-type historyItem = {
+type HistoryItem = {
+    id: string;
     sourceText: string;
     targetText: string;
     sourceLang: string;

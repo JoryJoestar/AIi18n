@@ -43,7 +43,7 @@ const routeTo = (item: any) => {
             </div>
         </header>
         <nav class="sidebar-main">
-            <div :class="{ 'active': route.path === item.link }" class="sidebar-main-menu-item"
+            <div :class="{ 'active': route.path === item.link || (route.name === 'projectDetails' && item.link === '/projects') }" class="sidebar-main-menu-item"
                 v-for="item, index in main_menu_items" :key="index" @click="routeTo(item)">
                 {{ item.name }}
             </div>

@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { hello } from '~/apis/translate';
+import { useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
+import { generateUniqueId } from '~/utils/uuid';
 
 const route = useRoute();
+const router = useRouter();
 
 const projectsStore = useProjectsStore(); // 创建项目 store 实例
 
@@ -23,21 +24,19 @@ const showMessage = (msg: string, duration: number, type: string) => {
     messageCloseButtonVisible.value = false;
 };
 
-const addProject = async () => {
-    // const newProject = {
-    //     id: Date.now(), // 使用当前时间戳作为项目 ID
-    //     name: `Project ${projectsStore.projects.length + 1}`, // 项目名称
-    //     // 其他项目属性可以在这里添加
-    // };
-    // projectsStore.addProject(newProject); // 调用 store 方法添加项目
+const newProject = () => {
+    const project_uuid = generateUniqueId();
+    const newProject: ProjectItem = {
+        id: `P${project_uuid}`,
+        name: `新建项目`,
+        data: [],
+        description: '',
+        createdAt: new Date(),
+    };
+    projectsStore.addProject(newProject); // 调用 store 方法添加项目
 
-    hello().then(res => {
-        console.log(res)
-        showMessage(`success`, 1500, 'success'); // 显示失败消息
-    }).catch((err) => {
-        console.error('Translation error:', err); // 添加错误日志
-        showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
-    });
+    // 跳转到对应的 projectDetails 页面
+    router.push({ name: 'projectDetails', params: { id: newProject.id } }); // 跳转到项目详情
 
 };
 
@@ -45,19 +44,21 @@ const addProject = async () => {
 
 <template>
     <div class="projects">
-        <nav class="projects-sidebar">
-            <ProjectsSidebar></ProjectsSidebar>
-        </nav>
-        <header class="translate-header">
-            <div class="translate-header-title">
+        <header class="projects-header">
+            <div class="projects-header-title">
                 Projects
             </div>
-            <div class="translate-header-breadcrumb">
 
-            </div>
         </header>
         <main class="projects-main">
-            <button @click="addProject" class="add-project-button">新增项目</button> <!-- 新增项目按钮 -->
+            <div class="projects-main-header">
+                <div class="projects-main-header-search">
+                    Search
+                </div>
+                <div class="projects-main-header-controls">
+                    <button @click="newProject" class="add-project-button">New</button>
+                </div>
+            </div>
         </main>
 
         <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration"
@@ -77,6 +78,33 @@ const addProject = async () => {
         }
     }
 
-    &-main {}
+    &-main {
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &-breadcrumb {
+                font-size: .9rem;
+            }
+
+            &-controls {
+                .add-project-button {
+                    font-size: 1rem;
+                    padding: .5rem 1rem;
+                    width: 5rem;
+                    height: 2.3rem;
+                    background-color: rgba(0, 0, 0, 0.7);
+                    border-radius: .5rem;
+                    color: white;
+                    cursor: pointer;
+                    transition: all .15s ease-in-out;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
 }
 </style>

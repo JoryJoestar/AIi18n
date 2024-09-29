@@ -39,7 +39,7 @@ const routeTo = (item: any) => {
                 AIi18n
             </div>
             <div class="sidebar-header-toggle">
-
+                
             </div>
         </header>
         <nav class="sidebar-main">
@@ -112,7 +112,7 @@ const routeTo = (item: any) => {
             align-items: center;
             padding: .5rem .75rem;
             border-radius: 5px;
-            transition: all .2s ease-in-out;
+            transition: all .15s ease-in-out;
             cursor: pointer;
 
             &:hover {

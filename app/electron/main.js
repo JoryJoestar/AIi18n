@@ -9,8 +9,21 @@ let fastApiProcess = null
 
 
 function startFastAPI() {
-  fastApiProcess = require('child_process').spawn(
-    path.join(__dirname, '../../build/backend/main/main'), { windowsHide: true })
+  const serverPath = path.join(__dirname, '../../build/backend/main/main'); // 确保路径正确
+  fastApiProcess = require('child_process').spawn(serverPath, { windowsHide: true });
+
+  fastApiProcess.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  fastApiProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  fastApiProcess.on('close', (code) => {
+    console.log(`子进程退出，代码: ${code}`);
+  });
+
 }
 
 function createWindow() {
@@ -19,7 +32,7 @@ function createWindow() {
     height: 720, // 设置窗口高度
     minWidth: 800, // 设置最小宽度
     minHeight: 600, // 设置最小高度
-    icon: path.join(__dirname, '../icon/favicon@4x.png'),
+    // icon: path.join(__dirname, '../icon/favicon@4x.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true, // 允许使用 Node.js

@@ -7,7 +7,7 @@ const translateStore = useTranslateStore();
 
 <template>
     <div class="translate-history">
-        <h3>翻译历史记录</h3>
+        <h3>History</h3>
         <ul>
             <li v-for="(item, index) in translateStore.history" :key="index">
                 {{ item.sourceText }} ({{ item.sourceLang }}) → {{ item.targetText }} ({{ item.targetLang }})

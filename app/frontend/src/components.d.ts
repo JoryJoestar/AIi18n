@@ -9,7 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     LanguageSelector: typeof import('./components/translate/LanguageSelector.vue')['default']
     Message: typeof import('./components/Message.vue')['default']
-    ProjectsSidebar: typeof import('./components/projects/ProjectsSidebar.vue')['default']
+    ProjectDetailsSidebar: typeof import('./components/projects/ProjectDetailsSidebar.vue')['default']
+    ProjectItemForm: typeof import('./components/projects/ProjectItemForm.vue')['default']
     SettingGeneral: typeof import('./components/settings/SettingGeneral.vue')['default']
     Settings: typeof import('./components/settings/Settings.vue')['default']
     SettingsModel: typeof import('./components/settings/SettingsModel.vue')['default']

@@ -27,5 +27,6 @@ const key = computed(() => {
 <style>
 .app-main {
     flex: 1;
+    height: 100%;
 }
 </style>

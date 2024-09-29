@@ -4,6 +4,7 @@ type ProjectItem = {
     data: ProjectData[]
     description: string
     createdAt: Date
+    recentAt?: Date
 }
 
 type ProjectData = {

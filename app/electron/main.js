@@ -9,7 +9,10 @@ let fastApiProcess = null
 
 
 function startFastAPI() {
-  const serverPath = path.join(__dirname, '../../build/backend/main/main'); // 确保路径正确
+
+  const serverPath = process.platform === 'darwin' 
+    ? path.join(__dirname, '../../build/backend/main/main') // macOS 可执行文件
+    : path.join(__dirname, '../../build/backend/main/main.exe'); // Windows 可执行文件
   fastApiProcess = require('child_process').spawn(serverPath, { windowsHide: true });
 
   fastApiProcess.stdout.on('data', (data) => {

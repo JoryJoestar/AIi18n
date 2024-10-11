@@ -3,6 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.translate import translate_router  # 导入 api 模块
+from api.settings import settings_router  # 导入 api 模块
 
 app = FastAPI()
 
@@ -15,15 +16,13 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有头部
 )
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
 app.include_router(translate_router)  # 包含 api 路由
+app.include_router(settings_router)  # 包含 api 路由
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     uvicorn.run("__main__:app",
                 host="127.0.0.1",
                 port=10000,
-                log_config="uvicorn_log.ini")
+                # log_config="uvicorn_log.ini"
+                )

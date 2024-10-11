@@ -11,6 +11,7 @@ export function useRequest<T>() {
             try {
                 const response = await fetch(`${baseURL}${url}`, options);
                 if (!response.ok) {
+                    console.log(response)
                     throw new Error('网络错误');
                 }
                 const result = await response.json();

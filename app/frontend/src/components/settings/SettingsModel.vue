@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { set_api_key } from '~/apis/settings';
 
 
 const openai_models = {
@@ -51,6 +52,34 @@ const models = ref([
     anthropic_models
 ])
 
+const setup_model = ref<string>("");
+const apiKey = ref<string>("");
+const setup_model_visible = ref<boolean>(false);
+
+const openSetup = (model: string) => {
+    setup_model.value = model;
+    setup_model_visible.value = true;
+}
+
+const cancelSetupApiKey = () => {
+    setup_model_visible.value = false;
+}
+
+const comfirmSetupApiKey = () => {
+    set_api_key(setup_model.value, apiKey.value).then((res: any) => {
+        if (setup_model.value === 'OpenAI') {
+            models.value[0].api_key = apiKey.value;
+        } else if (setup_model.value === 'Gemini') {
+            models.value[1].api_key = apiKey.value;
+        } else if (setup_model.value === 'Anthropic') {
+            models.value[2].api_key = apiKey.value;
+        };
+        console.log(res)
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 </script>
 
 <template>
@@ -67,7 +96,7 @@ const models = ref([
                     </div>
                     <div class="settings-model-main-item-body-apikey">
                         <span :class="{ 'set': platform.api_key !== '' }">API-KEY</span>
-                        <div class="settings-model-main-item-body-apikey-setup">
+                        <div class="settings-model-main-item-body-apikey-setup" @click="openSetup(platform.name)">
                             Set Up
                         </div>
                     </div>
@@ -79,6 +108,23 @@ const models = ref([
                         <div class="settings-model-main-item-models-item-name">{{ model.name }}</div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="input-apikey-container" v-show="setup_model_visible">
+            <div class="input-apikey-container-main">
+                <div class="input-apikey-container-main-title">
+                    Set Up {{ setup_model }}
+                </div>
+                <input class="input-apikey-container-main-input" type="text" v-model="apiKey"
+                    placeholder="Enter your API Key" />
+                <div class="input-apikey-container-main-controls">
+                    <div class="input-apikey-container-main-controls-cancel" @click="cancelSetupApiKey">Cancel</div>
+                    <div class="input-apikey-container-main-controls-comfirm" @click="comfirmSetupApiKey">
+                        Comfirm
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -162,6 +208,37 @@ const models = ref([
                     }
                 }
             }
+        }
+    }
+
+    .input-apikey-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: rgb(0, 0, 0, .5);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-main {
+            $size: 8rem;
+            position: absolute;
+            z-index: 999;
+            border-radius: .5rem;
+            width: calc(4 * $size);
+            height: calc(2 * $size);
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+
+            &-title {}
+
+            &-input {}
+
+            &-controls {}
         }
     }
 }

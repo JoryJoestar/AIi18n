@@ -21,3 +21,5 @@ build
 .env
 
 *.db
+
+__pycache__

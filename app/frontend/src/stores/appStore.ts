@@ -5,5 +5,18 @@ export const useAppStore = defineStore('app', () => {
 
   const settingsSwitch = ref<boolean>(false);
 
-  return { settingsSwitch }
+  const settingsApiKeyStatus = ref<string[]>([])
+
+  const setApiKeyStatus = (apikeyStatus: string[]) => {
+    settingsApiKeyStatus.value = apikeyStatus
+  }
+
+  const getApiKeyStatus = () => {
+    return settingsApiKeyStatus.value
+  }
+
+  return {
+    settingsSwitch,
+    setApiKeyStatus, getApiKeyStatus
+  }
 })

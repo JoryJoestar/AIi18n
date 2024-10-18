@@ -18,11 +18,12 @@ app.add_middleware(
 
 app.include_router(translate_router)  # 包含 api 路由
 app.include_router(settings_router)  # 包含 api 路由
-
+    
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     uvicorn.run("__main__:app",
                 host="127.0.0.1",
-                port=10000,
+                port=10001
+                # reload=True，
                 # log_config="uvicorn_log.ini"
                 )

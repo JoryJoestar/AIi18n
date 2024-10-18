@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { set_api_key } from '~/apis/settings';
+import { useAppStore } from '~/stores/appStore';
+import { get_api_key_status } from '~/apis/settings';
 
+const appStore = useAppStore();
+const api_key_status = ref<string[]>([]);
 
 const openai_models = {
     "name": "OpenAI",
     "icon": "https://openai.com/favicon.ico",
-    "api_key": "",
+    "api_key": false,
     "list": [
         {
             "name": "GPT 4o Mini",
@@ -18,7 +22,7 @@ const openai_models = {
 
 const google_models = {
     "name": "Gemini",
-    "api_key": "",
+    "api_key": false,
     "icon": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
     "list": [
         {
@@ -36,7 +40,7 @@ const google_models = {
 
 const anthropic_models = {
     "name": "Anthropic",
-    "api_key": "",
+    "api_key": false,
     "icon": "https://claude.ai/favicon.ico",
     "list": [
         {
@@ -66,19 +70,31 @@ const cancelSetupApiKey = () => {
 }
 
 const comfirmSetupApiKey = () => {
+    if (apiKey.value === '')
+        return
+
     set_api_key(setup_model.value, apiKey.value).then((res: any) => {
         if (setup_model.value === 'OpenAI') {
-            models.value[0].api_key = apiKey.value;
+            models.value[0].api_key = true;
         } else if (setup_model.value === 'Gemini') {
-            models.value[1].api_key = apiKey.value;
+            models.value[1].api_key = true;
         } else if (setup_model.value === 'Anthropic') {
-            models.value[2].api_key = apiKey.value;
+            models.value[2].api_key = true;
         };
+        setup_model_visible.value = false;
         console.log(res)
     }).catch((err) => {
         console.log(err)
     })
 }
+
+onBeforeMount(() => {
+    get_api_key_status().then(res => {
+        appStore.setApiKeyStatus(res.data)
+        api_key_status.value = appStore.getApiKeyStatus()
+    })
+
+})
 
 </script>
 
@@ -95,7 +111,7 @@ const comfirmSetupApiKey = () => {
                         <div class="settings-model-main-item-body-title-name">{{ platform.name }}</div>
                     </div>
                     <div class="settings-model-main-item-body-apikey">
-                        <span :class="{ 'set': platform.api_key !== '' }">API-KEY</span>
+                        <span :class="{ 'set': api_key_status.includes(platform.name) }">API-KEY</span>
                         <div class="settings-model-main-item-body-apikey-setup" @click="openSetup(platform.name)">
                             Set Up
                         </div>
@@ -229,16 +245,52 @@ const comfirmSetupApiKey = () => {
             z-index: 999;
             border-radius: .5rem;
             width: calc(4 * $size);
-            height: calc(2 * $size);
+            // height: calc(2 * $size);
             background-color: white;
             display: flex;
             flex-direction: column;
+            padding: 1rem 1.25rem;
 
-            &-title {}
+            &-title {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
 
-            &-input {}
+            &-input {
+                width: 100%;
+                padding: 1rem .75rem;
+                font-size: 1rem;
+                border: 1px solid rgba(0, 0, 0, 0.25);
+                border-radius: .5rem;
+                margin-bottom: 1rem;
+            }
 
-            &-controls {}
+            &-controls {
+                display: flex;
+                justify-content: flex-end;
+
+                div {
+                    padding: .5rem .75rem;
+                    color: white;
+                    cursor: pointer;
+                    font-size: .9rem;
+                    background-color: rgba(0, 0, 0, 0.75);
+                    color: white;
+                    border-radius: .5rem;
+                    cursor: pointer;
+                    transition: all .15s ease-in-out;
+                }
+
+                div:hover {
+                    background-color: rgba(0, 0, 0, 0.6);
+                }
+
+                &-cancel {
+                    margin-right: .5rem;
+                }
+
+                &-comfirm {}
+            }
         }
     }
 }

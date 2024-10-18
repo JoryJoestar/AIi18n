@@ -1,7 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  translate: (body) => ipcRenderer.invoke("function:translate", body)
+  translate: (body) => ipcRenderer.invoke("function:translate", body),
+  onFastAPIStatus: (callback) => ipcRenderer.on('fastapi-status', (event, data) => callback(data))
 })
 
 function domReady(condition = ['complete', 'interactive']) {
@@ -95,4 +96,4 @@ window.onmessage = ev => {
   ev.data.payload === 'removeLoading' && removeLoading()
 }
 
-setTimeout(removeLoading, 4999)
+setTimeout(removeLoading, 1999)

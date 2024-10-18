@@ -24,3 +24,7 @@ def update_api_key(db: Session, api_key: SettingsSchemas.ApiKeyParams):
         db.refresh(db_apikey)
         return db_apikey
     return None  # 如果未找到，则返回 None
+
+def get_api_key_status(db: Session):
+    api_keys = db.query(SettingsModel.ApiKey).all()  # 获取所有 API 密钥
+    return [api_key.name for api_key in api_keys]  # 返回 API 密钥的名称列表

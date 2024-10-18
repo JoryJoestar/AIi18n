@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 export function useRequest<T>() {
     const loading = ref<boolean>(false);
-    const baseURL = 'http://localhost:10000';
+    const baseURL = 'http://localhost:10001';
 
     const fetchData = (url: string, options?: RequestInit): Promise<T> => {
         loading.value = true;

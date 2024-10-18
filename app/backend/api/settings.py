@@ -16,6 +16,19 @@ logger = logging.getLogger(__name__)
 
 settings_router = APIRouter()
 
+@settings_router.get("/settings/apikeys/status")
+def get_apikey_status(db: Session = Depends(get_db)):
+    logger.info("Fetching API key status")
+    
+    api_key_status = SettingsCRUDs.get_api_key_status(db)  # 查询 API 密钥状态
+    
+    return {
+        'code': 200,
+        'data': api_key_status,
+        'message': "API Key status retrieved successfully"
+    }
+
+
 
 @settings_router.get("/settings/apikey/{name}")
 def get_api_key(name: str, db: Session = Depends(get_db)):

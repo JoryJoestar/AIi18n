@@ -1,36 +1,39 @@
 const { app, BrowserWindow, ipcMain, ipcRenderer, dialog, session } = require('electron/main')
 const path = require('node:path')
 const treeKill = require('tree-kill');
-
 const { translate } = require('./server.js');
-
+const { spawn, exec } = require('child_process');
 
 let fastApiProcess = null
-
-
+let mainWindow = null
 function startFastAPI() {
-
-  const serverPath = process.platform === 'darwin' 
-    ? path.join(__dirname, '../../build/backend/main/main') // macOS 可执行文件
-    : path.join(__dirname, '../../build/backend/main/main.exe'); // Windows 可执行文件
-  fastApiProcess = require('child_process').spawn(serverPath, { windowsHide: true });
-
+  const serverPath = path.join(__dirname, '../../build/backend/main/main')
+  fastApiProcess = spawn(serverPath)
   fastApiProcess.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
+    mainWindow.webContents.send('fastapi-status', { status:'success', stdout: data.toLocaleString() });
   });
-
   fastApiProcess.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
+    mainWindow.webContents.send('fastapi-status', { status:'error', stderr: data.toLocaleString()});
+  });
+  fastApiProcess.on('spawn', () => {
+    mainWindow.webContents.send('fastapi-status', { status: 'running', serverPath: serverPath });
   });
 
-  fastApiProcess.on('close', (code) => {
-    console.log(`子进程退出，代码: ${code}`);
-  });
-
+  // exec(serverPath, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`执行错误: ${error.message}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.error(`stderr: ${stderr}`);
+  //     return;
+  //   }
+  //   console.log(`stdout: ${stdout}`);
+  // });
 }
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1280, // 设置窗口宽度
     height: 720, // 设置窗口高度
     minWidth: 800, // 设置最小宽度
@@ -47,6 +50,7 @@ function createWindow() {
     mainWindow.loadURL(`http://localhost:${rendererPort}`);
     mainWindow.openDevTools();
   } else {
+    mainWindow.openDevTools();
     mainWindow.loadFile(path.join(__dirname, '../frontend/index.html'))
     startFastAPI()
   }
@@ -64,7 +68,6 @@ app.on('before-quit', stopFastAPI)
 
 app.whenReady().then(() => {
   ipcMain.handle('function:translate', translate);
-
   createWindow()
 
   app.on('activate', function () {

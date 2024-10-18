@@ -21,8 +21,8 @@ function buildBackend() {
     const backendPath = Path.join(SRC_ROOT, 'backend');
     process.chdir(backendPath)
     var exec = require('child_process').exec;
-    // const command = 'pyinstaller --add-data "uvicorn_log.ini:." --distpath=../../build/backend main.py'
-    const command = 'pyinstaller --distpath=../../build/backend main.py'
+
+    const command = 'pyinstaller --distpath=../../build/backend main.spec'
 
     exec(command,
         function (error, stdout, stderr) {

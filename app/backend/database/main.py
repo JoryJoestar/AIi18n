@@ -12,14 +12,14 @@ logger = logging.getLogger(__name__)
 
 
 if getattr(sys, 'frozen', False):
-    base_dir = get_parent_directory(os.path.abspath(os.path.dirname(__file__)), 4)
+    base_dir = get_parent_directory(os.path.abspath(os.path.dirname(__file__)), 4) # 获取打包后的绝对路径
     SQLALCHEMY_DATABASE_URL = f"sqlite:///{base_dir + '/database/prod.db'}"
 else:
     # 如果是开发环境
     SQLALCHEMY_DATABASE_URL = f"sqlite:///../database/dev.db";
     
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": True}
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

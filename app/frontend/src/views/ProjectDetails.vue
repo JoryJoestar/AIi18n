@@ -45,13 +45,22 @@ onMounted(() => {
         </nav>
         <div class="projectDetails-body">
             <header class="projectDetails-body-header">
+                <div class="projectDetails-body-header-left">
+                    <div class="projectDetails-body-header-left-upload-translate">
+                        UPLOAD
+                    </div>
+                </div>
                 <div class="projectDetails-body-header-name">
                     {{ getProjectsInfo?.name }}
                 </div>
-
+                <div class="projectDetail-body-header-right">
+                    <div class="projectDetails-body-header-right-download-translate">
+                        DOWNLOAD
+                    </div>
+                </div>
             </header>
             <main class="projectDetails-body-main">
-
+                
             </main>
         </div>
 
@@ -76,7 +85,7 @@ onMounted(() => {
 
         &-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
 
             &-name {
@@ -105,6 +114,19 @@ onMounted(() => {
                 /* 向下的三角形颜色 */
                 margin-left: 5px;
                 /* 三角形与文本的间距 */
+            }
+
+            &-left {
+
+                &-upload-translate {
+                    cursor: pointer;
+                }
+            }
+
+            &-right {
+                &-download-translate {
+                    cursor: pointer;
+                }
             }
         }
 

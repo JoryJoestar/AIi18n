@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from .translate import Translate
+from schemas.translate import Translate
 
 class ProjectItem(BaseModel):
     position: str

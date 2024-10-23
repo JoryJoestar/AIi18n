@@ -1,10 +1,9 @@
 type TranslateItem = {
-    id: string,
-    source_text: string;
-    source_language: string;
-    target_language: string;
-    prompt_version: string;
-    replacement: Replacement[];
+    source_text: string
+    source_language: string
+    target_language: string
+    prompt_version: string
+    replacement: Replacement[]
 };
 
 type Replacement = {

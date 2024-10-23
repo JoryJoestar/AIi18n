@@ -11,3 +11,13 @@ export const translate = async (params: TranslateItem) => {
         body: JSON.stringify(params),
     })
 };
+
+export const get_translate_by_content = async (content: string) => {
+    return fetchData("/translate/get", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: content }),
+    })
+};

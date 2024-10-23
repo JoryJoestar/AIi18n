@@ -5,22 +5,22 @@ import importlib
 import logging
 
 from services import openai
-from schemas.translate import TranslateParams
+from schemas.translate import Translate
 
 # 配置 logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def translate_query(translateParams: TranslateParams):
+def translate_query(translate: Translate):
     # 获取 openAI
     client = openai.ClientOpenAI()
     
     logger.info('OpenAI: %s',client.client.base_url)
     # 获取 prompt 版本模块
-    prompt_module_path = f'services.prompt.{ translateParams.prompt_version }.prompt'
+    prompt_module_path = f'services.prompt.{ translate.prompt_version }.prompt'
     prompt = importlib.import_module(prompt_module_path)
     # 获取 prompt
-    translate_prompt = prompt.get_prompt(translateParams)
+    translate_prompt = prompt.get_prompt(translate)
     # 构建 messages
     messages = [
             {"role": "system", "content": translate_prompt['system_prompt']},

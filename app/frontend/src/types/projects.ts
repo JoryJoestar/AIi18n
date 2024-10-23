@@ -1,16 +1,11 @@
 type ProjectItem = {
-    id: string;
-    name: string;
-    data: ProjectData[]
+    name: string
     description: string
-    createdAt: Date
-    recentAt?: Date
+    data: ProjectData[]
 }
 
 type ProjectData = {
-    id: string;
-    location: string;
+    position: string
     translate: TranslateItem[]
-    description: string;
 }
 

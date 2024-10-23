@@ -1,12 +1,12 @@
+from sqlalchemy.ext.declarative import declarative_base
 import datetime
 from database.main import Base
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-from enum import Enum
-from .translate import LanguageEnum
-
 now = datetime.datetime.now(datetime.timezone.utc)
-    
+
+Base = declarative_base()
+
 class Project(Base):
     __tablename__ = "project"
     
@@ -28,5 +28,7 @@ class ProjectItem(Base):
     created_at = Column(String, default=now, nullable=False)  # 创建时间
     updated_at = Column(String, default=now, onupdate=now, nullable=False)  # 更新时间
     
+    project_id = Column(Integer, ForeignKey('project.id'))  # 添加 project_id 字段
     project = relationship("Project", back_populates="project_item")
-    translate_data = relationship("Translate", back_populates="project_item")
+    translate = relationship("Translate", back_populates="project_item")
+    

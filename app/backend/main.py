@@ -2,8 +2,11 @@ import multiprocessing
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.translate import translate_router  # 导入 api 模块
-from api.settings import settings_router  # 导入 api 模块
+
+# 导入 api 模块
+from api.translate import translate_router  
+from api.settings import settings_router
+from api.projects import projects_router
 
 app = FastAPI()
 
@@ -16,8 +19,9 @@ app.add_middleware(
     allow_headers=["*"],  # 允许所有头部
 )
 
-app.include_router(translate_router)  # 包含 api 路由
 app.include_router(settings_router)  # 包含 api 路由
+app.include_router(projects_router)
+app.include_router(translate_router)  # 包含 api 路由
     
 if __name__ == "__main__":
     multiprocessing.freeze_support()

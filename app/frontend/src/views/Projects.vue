@@ -1,14 +1,23 @@
 <script lang="ts" setup>
 
-import { ref } from 'vue';
+import { compile, computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
 import { generateUniqueId } from '~/utils/uuid';
+import { create_project, get_project_all } from '~/apis/projects';
 
 const route = useRoute();
 const router = useRouter();
 
 const projectsStore = useProjectsStore(); // 创建项目 store 实例
+
+const projects = ref<ResProject[]>()
+const computedProjects = computed(() => {
+    return projects.value?.map(project => ({
+        ...project,
+        created_at: new Date(project.created_at).toLocaleString() // 格式化 created_at
+    })) || [];
+})
 
 const messageVisible = ref(false);
 const messageContent = ref(''); // 用于存储消息内容
@@ -25,24 +34,34 @@ const showMessage = (msg: string, duration: number, type: string) => {
 };
 
 const newProject = () => {
-    const project_uuid = generateUniqueId();
-    const newProject: ProjectItem = {
-        id: `P${project_uuid}`,
+    const newProject: ReqProject = {
         name: `New project`,
-        data: [],
         description: '',
-        createdAt: new Date(),
     };
-    projectsStore.addProject(newProject); // 调用 store 方法添加项目
 
-    // 跳转到对应的 projectDetails 页面
-    router.push({ name: 'projectDetails', params: { id: newProject.id } }); // 跳转到项目详情
-
+    create_project(newProject).then((res: ResProject) => {
+        // 跳转到对应的 projectDetails 页面
+        router.push({ name: 'projectDetails', params: { id: res.id } });
+    }).catch(err => {
+        showMessage(err.message, 3000, 'error');
+    })
 };
 
-const goToDetails = (id: string) => {
+const goToDetails = (id: number) => {
     router.push({ name: 'projectDetails', params: { id } });
 }
+
+const get_projects_all = () => {
+    get_project_all().then((res: ResProject[]) => {
+        projects.value = res
+    }).catch(err => {
+        showMessage(err.message, 3000, 'error');
+    })
+}
+
+onBeforeMount(() => {
+    get_projects_all()
+})
 
 </script>
 
@@ -64,7 +83,7 @@ const goToDetails = (id: string) => {
                 </div>
             </div>
             <div class="projects-main-body">
-                <div class="projects-main-body-item" v-for="item, index in projectsStore.projects" :key="index"
+                <div class="projects-main-body-item" v-for="item, index in computedProjects" :key="index"
                     @click="goToDetails(item.id)">
                     <div class="projects-main-body-item-name">
                         {{ item.name }}
@@ -73,7 +92,7 @@ const goToDetails = (id: string) => {
                         {{ item.description === '' ? 'Share to Earth' : item.description }}
                     </div>
                     <div class="projects-main-body-item-date">
-                        {{ item.createdAt.toLocaleString() }}
+                        {{ item.created_at }}
                     </div>
                 </div>
             </div>
@@ -137,7 +156,7 @@ const goToDetails = (id: string) => {
             gap: 1rem; // 项目间隔
 
             &-item {
-                width: calc(20% - 1rem); // 默认每行最多四个项目
+                width: calc(20% - .5rem); // 默认每行最多四个项目
                 height: 12rem;
                 display: flex;
                 flex-direction: column;
@@ -172,19 +191,19 @@ const goToDetails = (id: string) => {
 
             @media (max-width: 1680px) {
                 &-item {
-                    width: calc(25% - 1rem);
+                    width: calc(25% - .5rem);
                 }
             }
 
             @media (max-width: 1440px) {
                 &-item {
-                    width: calc(33% - 1rem);
+                    width: calc(33% - .5rem);
                 }
             }
 
             @media (max-width: 1080px) {
                 &-item {
-                    width: calc(50% - 1rem);
+                    width: calc(50% - .5rem);
                 }
             }
 

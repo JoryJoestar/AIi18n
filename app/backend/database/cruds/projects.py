@@ -26,7 +26,7 @@ def delete_project(db: Session, project_id: int):
     db.commit()
 
 def get_projects(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(ProjectsModel.Project).offset(skip).limit(limit).all()
+    return db.query(ProjectsModel.Project).order_by(ProjectsModel.Project.updated_at.desc()).offset(skip).limit(limit).all()
 
 def get_project_by_id(db: Session, project_id: int):
     return db.query(ProjectsModel.Project).filter(ProjectsModel.Project.id == project_id).first()

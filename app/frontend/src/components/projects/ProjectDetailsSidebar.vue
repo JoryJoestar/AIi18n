@@ -3,6 +3,8 @@ import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore';
 
+import IconArrowLeft from '~/assets/icon/arrow-left-line.svg'
+
 const route = useRoute();
 const router = useRouter();
 
@@ -11,26 +13,16 @@ const backToProjects = () => {
     router.push('/projects');
 }
 
-// 获取 URL 上的 ID
-const projectId = computed(() => {
-    return route.params.id; // 假设 ID 在路由参数中
-});
-
-// 根据 ID 获取当前项目的信息
-const getProjectsInfo = computed(() => {
-    return projectsStore.projects.find(project => project.id === projectId.value);
-});
-
 </script>
 
 <template>
     <div class="projectDetails-sidebar-container">
         <div class="projectDetails-sidebar-container-header">
             <div class="projectDetails-sidebar-container-header-back" @click="backToProjects">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#5f6368">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
                     <path
-                        d="M20.3284 11.0001V13.0001L7.50011 13.0001L10.7426 16.2426L9.32842 17.6568L3.67157 12L9.32842 6.34314L10.7426 7.75735L7.49988 11.0001L20.3284 11.0001Z"
-                        fill="currentColor" />
+                        d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" />
                 </svg>
             </div>
             <div class="projectDetails-sidebar-container-header-controls">
@@ -121,7 +113,7 @@ const getProjectsInfo = computed(() => {
                 svg {
                     width: 1.25rem;
                     height: 1.25rem;
-                    margin-top:.15rem;
+                    margin-top: .15rem;
                 }
             }
 

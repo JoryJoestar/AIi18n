@@ -1,5 +1,6 @@
 import { createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
+import { get_project_by_id } from '~/apis/projects';
 import { useProjectsStore } from '~/stores/projectsStore';
 
 const errorRoutes: Array<RouteRecordRaw> = [
@@ -57,15 +58,22 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const projectsStore = useProjectsStore(); // 获取 store 实例
-
   // projects: 检查项目 ID 是否存在
   if (to.name === 'projectDetails') {
-    const projectId = to.params.id; // 获取路由参数中的 ID
-    const projectExists = projectsStore.projects.some((project: ProjectItem) => project.id === projectId); // 检查项目是否存在
-    if (!projectExists) {
-      return next('/404'); // 如果项目不存在，重定向到 404 页面
-    }
+    const projectId = Number(to.params.id); // 获取路由参数中的 ID
+
+    get_project_by_id(projectId).then((res: ResProject) => {
+      console.log(res)
+      if (!res) {
+        next('/404'); // 如果项目不存在，重定向到 404 页面
+      } else {
+        next();
+      }
+    }).catch(err => {
+      console.log(err)
+      next('/404');
+    })
+    return;
   }
 
   // 打包重定向问题

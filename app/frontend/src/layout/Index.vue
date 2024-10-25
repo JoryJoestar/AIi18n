@@ -18,6 +18,7 @@ const appStore = useAppStore();
 
         <div class="body">
             <Sidebar />
+            <div class="sidebar-placeholder"></div>
             <Main />
             <Settings v-if="appStore.settingsSwitch"></Settings>
         </div>
@@ -30,5 +31,12 @@ const appStore = useAppStore();
     display: flex;
     width: 100vw;
     height: 100vh;
+
+    .sidebar-placeholder {
+        width: 15vw;
+        min-width: 10rem;
+        max-width: 12rem;
+        height: 100%;
+    }
 }
 </style>

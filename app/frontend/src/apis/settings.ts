@@ -4,7 +4,7 @@ const { fetchData } = useRequest<any>();
 
 
 export const get_api_key_status = async () => {
-    return fetchData("/settings/apikeys/status",{
+    return fetchData("/settings/apikeys/status", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -12,13 +12,13 @@ export const get_api_key_status = async () => {
     })
 };
 
-export const set_api_key = async (model: string, api_key: string) => {
+export const set_api_key = async (params: ApiKey) => {
     return fetchData("/settings/apikey", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "name": model, "value": api_key }),
+        body: JSON.stringify(params),
     })
 };
 

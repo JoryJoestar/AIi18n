@@ -4,6 +4,12 @@ import { defineStore } from 'pinia'
 
 export const useTranslateStore = defineStore('translate', () => {
 
+  const languages = ref<string[]>([]);
+  const language_codes = ref<string[]>([]);
+  const source_language = ref<string>('');
+  const translate_languages = ref<string[]>([]);
+  const translate_language = ref<string>('');
+
   const history = ref<HistoryItem[]>([]);
 
   const formatTimestamp = (date: Date) => {

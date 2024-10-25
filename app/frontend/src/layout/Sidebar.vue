@@ -58,6 +58,7 @@ const routeTo = (item: any) => {
 
 <style lang="scss">
 .sidebar {
+    position: fixed;
     width: 15vw;
     min-width: 10rem;
     max-width: 12rem;

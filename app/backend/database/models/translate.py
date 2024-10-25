@@ -5,9 +5,6 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from enum import Enum 
 from sqlalchemy.types import Enum as SQLAEnum
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
 
 now = datetime.datetime.now(datetime.timezone.utc)
     
@@ -37,10 +34,14 @@ class Translate(Base):
     
     id = Column(Integer, primary_key=True)
     source_content = Column(String, nullable=False)
-    result_content = Column(String, nullable=False)
+    translate_content = Column(String, nullable=False)
     source_language = Column(SQLAEnum(LanguageEnum), nullable=False)  # 使用枚举类型
-    target_language = Column(SQLAEnum(LanguageEnum), nullable=False)  # 使用枚举类型
+    translate_language = Column(SQLAEnum(LanguageEnum), nullable=False)  # 使用枚举类型
     prompt_version = Column(String)
+    translate_elapsed_time_second = Column(Integer)
+    prompt_tokens = Column(Integer)
+    output_tokens = Column(Integer)
+    
     created_at = Column(String, default=now, nullable=False)
     updated_at = Column(String, default=now, onupdate=now, nullable=False)
     

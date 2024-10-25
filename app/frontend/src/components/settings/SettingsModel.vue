@@ -73,7 +73,12 @@ const comfirmSetupApiKey = () => {
     if (apiKey.value === '')
         return
 
-    set_api_key(setup_model.value, apiKey.value).then((res: any) => {
+    const params = {
+        "name": setup_model.value,
+        "value": apiKey.value
+    }
+
+    set_api_key(params).then((res: any) => {
         if (setup_model.value === 'OpenAI') {
             models.value[0].api_key = true;
         } else if (setup_model.value === 'Gemini') {

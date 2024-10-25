@@ -1,11 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
 import datetime
 from database.main import Base
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 now = datetime.datetime.now(datetime.timezone.utc)
-
-Base = declarative_base()
 
 class Project(Base):
     __tablename__ = "project"

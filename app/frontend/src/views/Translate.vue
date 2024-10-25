@@ -55,21 +55,20 @@ const translateFetch = () => {
     }
 
     isTranslating.value = true; // 开始翻译时设置状态
-    const translate_uuid = generateUniqueId();
-    const params: TranslateItem = {
-        id: `T${translate_uuid}`,
-        source_text: tranlsate_source_text.value,
+    const params: ReqTranslate = {
+        source_content: tranlsate_source_text.value,
         source_language: translate_source_language.value,
         target_language: translate_target_language.value,
         prompt_version: 'v2',
-        replacement: []
+        replacement: [],
+        project_item_id: 1
     }
 
     translate(params).then(res => {
         console.log(res)
         isTranslating.value = false; // 翻译完成时恢复状态
         if (res.code === 200) {
-            translate_target_text.value = res.data.translate_content; // 更新翻译内容   
+            translate_target_text.value = res.data.translate_content; // 更新翻译内容 s
             const history_uuid = generateUniqueId();
             let historyData = {
                 id: `h${history_uuid}`,

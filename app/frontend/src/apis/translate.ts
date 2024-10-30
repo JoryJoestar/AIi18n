@@ -1,8 +1,8 @@
 import { useRequest } from '~/hooks/useRequest';
 
-const { fetchData } = useRequest<TranslateResponse>();
+const { fetchData } = useRequest<any>();
 
-export const translate = async (params: TranslateItem) => {
+export const translate = async (params: ReqTranslate) => {
     return fetchData("/translate", {
         method: "POST",
         headers: {
@@ -18,6 +18,6 @@ export const get_translate_by_content = async (content: string) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: content }),
+        body: JSON.stringify({ source_content: content }),
     })
 };

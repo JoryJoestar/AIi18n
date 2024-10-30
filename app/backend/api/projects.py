@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # ===Project===
 @projects_router.post("/project/create")
-def create_project(project: ProjectSchemas.Project, db: Session = Depends(get_db)):
+def create_project(project: ProjectSchemas.CreateProject, db: Session = Depends(get_db)):    
     return ProjectCRUDs.create_project(db=db, project=project)
 
 @projects_router.post("/project/update")

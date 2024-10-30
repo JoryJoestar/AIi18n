@@ -7,7 +7,7 @@ class Replacement(BaseModel):
 class Translate(BaseModel):
     source_content: str
     source_language: str
-    target_language: str
+    translate_language: str
     prompt_version: str
     replacement: list[Replacement]
 

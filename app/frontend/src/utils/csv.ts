@@ -41,8 +41,14 @@ export const parseTranslateSourceCSV = (file: File, callback: (data: any) => voi
         return rest; // 返回去掉第一列后的数据
       });
 
-      console.log(languages, translate_languages, source_data, replacements)
-      callback(results.data);
+      const csv_data = {
+        languages,
+        translate_languages,
+        source_data,
+        replacements
+      }
+
+      callback(csv_data);
     },
     header: true // 如果 CSV 有表头，设置为 true
   });

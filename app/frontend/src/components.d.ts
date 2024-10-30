@@ -7,13 +7,21 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./components/projects/ProjectDownload copy.vue')['default']
     LanguageSelector: typeof import('./components/translate/LanguageSelector.vue')['default']
     Message: typeof import('./components/Message.vue')['default']
+    ProjectBottomBar: typeof import('./components/projects/bottombar/ProjectBottomBar.vue')['default']
     ProjectDetailsData: typeof import('./components/projects/ProjectDetailsData.vue')['default']
+    ProjectDetailsHeader: typeof import('./components/projects/ProjectDetailsHeader.vue')['default']
     ProjectDetailsSidebar: typeof import('./components/projects/ProjectDetailsSidebar.vue')['default']
-    ProjectDownload: typeof import('./components/projects/ProjectDownload.vue')['default']
+    ProjectDownload: typeof import('./components/projects/bottombar/ProjectDownload.vue')['default']
+    ProjectDownloadBody: typeof import('./components/projects/bottombar/ProjectDownloadBody.vue')['default']
+    ProjectHeader: typeof import('./components/projects/ProjectHeader.vue')['default']
     ProjectItemForm: typeof import('./components/projects/ProjectItemForm.vue')['default']
-    ProjectUpload: typeof import('./components/projects/ProjectUpload.vue')['default']
+    ProjectMenu: typeof import('./components/projects/ProjectMenu.vue')['default']
+    ProjectTranslate: typeof import('./components/projects/bottombar/ProjectTranslate.vue')['default']
+    ProjectUpload: typeof import('./components/projects/bottombar/ProjectUpload.vue')['default']
+    ProjectUploadBody: typeof import('./components/projects/bottombar/ProjectUploadBody.vue')['default']
     SettingGeneral: typeof import('./components/settings/SettingGeneral.vue')['default']
     Settings: typeof import('./components/settings/Settings.vue')['default']
     SettingsModel: typeof import('./components/settings/SettingsModel.vue')['default']

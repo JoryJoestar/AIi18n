@@ -2,8 +2,15 @@ from sqlalchemy.orm import Session
 
 import database.models.translate as TranslateModel
 
-def create_translate(db: Session, translate: TranslateModel.Translate, project_item_id: int):
-    db_translate = TranslateModel.Translate(**translate.dict(), project_item_id=project_item_id)
+import logging
+# 配置 logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def create_translate(db: Session, translate_params: TranslateModel.Translate, translate_response: dict):
+    logger.info(translate_params)
+    logger.info(translate_response)
+    db_translate = TranslateModel.Translate(**translate_params.dict(), **{k: v for k, v in translate_response.items() if k != 'total_tokens'})
     db.add(db_translate)
     db.commit()
     db.refresh(db_translate)

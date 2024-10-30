@@ -31,6 +31,7 @@ export const useTranslateStore = defineStore('translate', () => {
 
   return {
     history, addHistory, removeHistory, clearHistory,
-    formatTimestamp
+    formatTimestamp,
+    languages, language_codes, source_language, translate_languages, translate_language
   }
 })

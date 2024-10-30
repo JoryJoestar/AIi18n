@@ -6,6 +6,8 @@ from sqlalchemy.orm import relationship
 from enum import Enum 
 from sqlalchemy.types import Enum as SQLAEnum
 
+from database.models.projects import ProjectItem
+
 now = datetime.datetime.now(datetime.timezone.utc)
     
 class LanguageEnum(Enum):
@@ -35,17 +37,17 @@ class Translate(Base):
     id = Column(Integer, primary_key=True)
     source_content = Column(String, nullable=False)
     translate_content = Column(String, nullable=False)
-    source_language = Column(SQLAEnum(LanguageEnum), nullable=False)  # 使用枚举类型
-    translate_language = Column(SQLAEnum(LanguageEnum), nullable=False)  # 使用枚举类型
+    source_language = Column(String, nullable=False)  # 使用枚举类型
+    translate_language = Column(String, nullable=False)  # 使用枚举类型
     prompt_version = Column(String)
-    translate_elapsed_time_second = Column(Integer)
+    translate_elapsed_time = Column(Integer)
     prompt_tokens = Column(Integer)
     output_tokens = Column(Integer)
     
     created_at = Column(String, default=now, nullable=False)
     updated_at = Column(String, default=now, onupdate=now, nullable=False)
     
-    project_item_id = Column(Integer, ForeignKey('project_item.id'))
+    project_item_id = Column(Integer, ForeignKey('project_item.id'), nullable=True)
     project_item = relationship("ProjectItem", back_populates="translate")
     replacement = relationship('Replacement', back_populates="translate")
     

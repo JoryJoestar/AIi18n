@@ -58,10 +58,9 @@ const translateFetch = () => {
     const params: ReqTranslate = {
         source_content: tranlsate_source_text.value,
         source_language: translate_source_language.value,
-        target_language: translate_target_language.value,
+        translate_language: translate_target_language.value,
         prompt_version: 'v2',
-        replacement: [],
-        project_item_id: 1
+        replacement: []
     }
 
     translate(params).then(res => {

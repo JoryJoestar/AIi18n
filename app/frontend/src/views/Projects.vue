@@ -1,19 +1,16 @@
 <script lang="ts" setup>
-
-import { compile, computed, onBeforeMount, onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, onBeforeMount, ref } from 'vue';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
-import { generateUniqueId } from '~/utils/uuid';
-import { create_project, get_project_all } from '~/apis/projects';
+import { create_project, get_project_by_id, get_project_item_by_id } from '~/apis/projects';
 
 const route = useRoute();
 const router = useRouter();
 
 const projectsStore = useProjectsStore(); // 创建项目 store 实例
 
-const projects = ref<ResProject[]>()
 const computedProjects = computed(() => {
-    return projects.value?.map(project => ({
+    return projectsStore.projects.map(project => ({
         ...project,
         created_at: new Date(project.created_at).toLocaleString() // 格式化 created_at
     })) || [];
@@ -47,20 +44,32 @@ const newProject = () => {
     })
 };
 
-const goToDetails = (id: number) => {
-    router.push({ name: 'projectDetails', params: { id } });
-}
-
-const get_projects_all = () => {
-    get_project_all().then((res: ResProject[]) => {
-        projects.value = res
+const getProject = (projectId: number) => {
+    get_project_by_id(projectId).then((res: ResProject) => {
+        projectsStore.project = res;
     }).catch(err => {
         showMessage(err.message, 3000, 'error');
     })
+};
+
+// 根据 ID 获取当前项目的信息
+const getProjectItem = (projectId: number) => {
+    get_project_item_by_id(projectId).then((res: ResProjectItem) => {
+        projectsStore.projectItem = res;
+    }).catch(err => {
+        showMessage(err.message, 3000, 'error');
+    })
+};
+
+const goToDetails = (id: number) => {
+    getProject(id)
+    getProjectItem(id)
+
+    router.push({ name: 'projectDetails', params: { id } });
 }
 
 onBeforeMount(() => {
-    get_projects_all()
+    projectsStore.get_projects_all();
 })
 
 </script>
@@ -89,7 +98,7 @@ onBeforeMount(() => {
                         {{ item.name }}
                     </div>
                     <div class="projects-main-body-item-description">
-                        {{ item.description === '' ? 'Share to Earth' : item.description }}
+                        {{ item.description }}
                     </div>
                     <div class="projects-main-body-item-date">
                         {{ item.created_at }}

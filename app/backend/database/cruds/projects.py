@@ -2,6 +2,11 @@ from sqlalchemy.orm import Session
 
 import database.models.projects as ProjectsModel
 
+import logging
+# 配置 logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # ===Project===
 
 # 创建项目
@@ -30,6 +35,8 @@ def get_projects(db: Session, skip: int = 0, limit: int = 100):
 
 def get_project_by_id(db: Session, project_id: int):
     return db.query(ProjectsModel.Project).filter(ProjectsModel.Project.id == project_id).first()
+
+
 
 
 # ===ProjectItem===

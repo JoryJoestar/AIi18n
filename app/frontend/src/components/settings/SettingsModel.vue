@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onUpdated, ref } from 'vue';
 import { set_api_key } from '~/apis/settings';
 import { useAppStore } from '~/stores/appStore';
 import { get_api_key_status } from '~/apis/settings';
+import { nextTick } from 'process';
 
 const appStore = useAppStore();
 const api_key_status = ref<string[]>([]);
@@ -88,6 +89,10 @@ const comfirmSetupApiKey = () => {
         };
         setup_model_visible.value = false;
         console.log(res)
+        get_api_key_status().then(res => {
+            appStore.setApiKeyStatus(res.data)
+            api_key_status.value = appStore.getApiKeyStatus()
+        })
     }).catch((err) => {
         console.log(err)
     })
@@ -98,7 +103,6 @@ onBeforeMount(() => {
         appStore.setApiKeyStatus(res.data)
         api_key_status.value = appStore.getApiKeyStatus()
     })
-
 })
 
 </script>

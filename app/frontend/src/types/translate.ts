@@ -10,11 +10,10 @@ type Language = {
 type ReqTranslate = {
     source_content: string
     source_language: string
-    target_language: string
+    translate_language: string
     prompt_version: string
     replacement: ReqReplacement[]
 
-    project_item_id: number
 };
 
 type ResTranslate = {
@@ -29,6 +28,8 @@ type ResTranslate = {
     output_tokens: number
     created_at: string
     updated_at: string
+
+    project_item_id: number
 }
 
 // ===Replacement===
@@ -48,6 +49,13 @@ type ResReplacement = {
     updated_at: string
 }
 
+// ===table===
+
+type table = {
+    
+}
+
+
 
 type HistoryItem = {
     id: string;
@@ -57,3 +65,4 @@ type HistoryItem = {
     targetLang: string;
     timestamp: Date;
 }
+

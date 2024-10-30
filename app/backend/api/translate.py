@@ -24,16 +24,17 @@ def translate(translate_params: TranslateSchemas.Translate, db: Session = Depend
     logger.info('params: %s', translate_params)  # 使用 logging
     
     # 如果数据库里已经存有翻译记录，则直接返回
-    is_translated = TranslateCRUDs.get_translate_by_id(db, translate_params.translate_id)
+    translate_response = TranslateCRUDs.get_translate_by_content(db, translate_params.source_content)
     
-    if is_translated:
-        response = TranslateCRUDs.get_translate_by_id(db, translate_params.translate_id).result_content
+    if translate_response:
+        pass
     else:
-        response = translate_query(translate_params)
-
+        translate_response = translate_query(translate_params)
+        TranslateCRUDs.create_translate(db, translate_params=translate_params, translate_response=translate_response)
+        
     return {
         'code': 200,
-        'data': response
+        'data': translate_response
     }
 
 @translate_router.get("/translate/get/{translate_id}")

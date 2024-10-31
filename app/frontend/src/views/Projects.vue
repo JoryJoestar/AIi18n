@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
 import { create_project, get_project_by_id, get_project_item_by_id } from '~/apis/projects';
@@ -32,34 +32,18 @@ const newProject = () => {
     create_project(newProject).then((res: ResProject) => {
         // 跳转到对应的 projectDetails 页面
         router.push({ name: 'projectDetails', params: { id: res.id } });
-    }).catch(err => {
-        appStore.showMessage(err.message, 3000, 'error');
-    })
-};
-
-const getProject = (projectId: number) => {
-    get_project_by_id(projectId).then((res: ResProject) => {
-        projectsStore.project = res;
-    }).catch(err => {
-        appStore.showMessage(err.message, 3000, 'error');
-    })
-};
-
-// 根据 ID 获取当前项目的信息
-const getProjectItem = (projectId: number) => {
-    get_project_item_by_id(projectId).then((res: ResProjectItem) => {
-        projectsStore.projectItem = res;
-    }).catch(err => {
-        appStore.showMessage(err.message, 3000, 'error');
     })
 };
 
 const goToDetails = (id: number) => {
-    getProject(id)
-    getProjectItem(id)
-
+    projectsStore.getProject(id);
     router.push({ name: 'projectDetails', params: { id } });
 }
+
+onBeforeMount(() => {
+    projectsStore.getProjectsAll();
+})
+
 
 </script>
 

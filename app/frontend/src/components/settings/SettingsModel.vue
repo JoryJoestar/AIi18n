@@ -10,7 +10,7 @@ const api_key_status = ref<string[]>([]);
 
 const openai_models = {
     "name": "OpenAI",
-    "icon": "https://openai.com/favicon.ico",
+    "icon": "https://api.iconify.design/logos:openai.svg",
     "api_key": false,
     "list": [
         {
@@ -24,7 +24,7 @@ const openai_models = {
 const google_models = {
     "name": "Gemini",
     "api_key": false,
-    "icon": "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg",
+    "icon": "https://api.iconify.design/logos:google-gemini.svg",
     "list": [
         {
             "name": "Gemini 1.0 Pro",
@@ -42,7 +42,7 @@ const google_models = {
 const anthropic_models = {
     "name": "Anthropic",
     "api_key": false,
-    "icon": "https://claude.ai/favicon.ico",
+    "icon": "https://api.iconify.design/logos:claude.svg",
     "list": [
         {
             "name": "Claude 3.5 Sonnet",
@@ -117,7 +117,7 @@ onBeforeMount(() => {
                 <div class="settings-model-main-item-body">
                     <div class="settings-model-main-item-body-title">
                         <img class="settings-model-main-item-body-title-icon" :src="platform.icon" alt="">
-                        <div class="settings-model-main-item-body-title-name">{{ platform.name }}</div>
+                        <div class="settings-model-main-item-body-title-name"></div>
                     </div>
                     <div class="settings-model-main-item-body-apikey">
                         <span :class="{ 'set': api_key_status.includes(platform.name) }">API-KEY</span>
@@ -179,15 +179,9 @@ onBeforeMount(() => {
                     align-items: center;
 
                     &-icon {
-                        width: 1.5rem;
-                        height: 1.5rem;
+                        width: 6rem;
+                        // height: 3rem;
                     }
-
-                    &-name {
-                        font-size: 1.25rem;
-                        margin-left: .5rem;
-                    }
-
                 }
 
                 &-apikey {

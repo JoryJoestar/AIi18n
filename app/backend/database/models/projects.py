@@ -20,7 +20,7 @@ class ProjectItem(Base):
     __tablename__ = "project_item"
 
     id = Column(Integer, primary_key=True)
-    position = Column(String, default="default", nullable=False)
+    scene = Column(String, default="default", nullable=False)
 
     created_at = Column(String, default=now, nullable=False)  # 创建时间
     updated_at = Column(String, default=now, onupdate=now, nullable=False)  # 更新时间

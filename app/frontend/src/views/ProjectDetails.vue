@@ -1,8 +1,16 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, ref } from 'vue';
 import { useAppStore } from '~/stores/appStore';
+import { useProjectsStore } from '~/stores/projectsStore';
 
 const appStore = useAppStore();
+
+const projectsStore = useProjectsStore();
+
+
+onBeforeMount(()=>{
+    projectsStore.getProjectItemsAll();
+})
 
 </script>
 

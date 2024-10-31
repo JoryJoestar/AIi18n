@@ -45,6 +45,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/library',
         name: 'library',
         component: () => import('@/views/Library.vue')
+      },
+      {
+        path: '/tools',
+        name: 'tools',
+        component: () => import('@/views/Tools.vue')
       }
     ]
   }

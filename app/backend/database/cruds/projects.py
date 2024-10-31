@@ -50,7 +50,7 @@ def create_project_item(db: Session, project_item: ProjectsModel.ProjectItem, pr
 
 def update_project_item(db: Session, project_item: ProjectsModel.ProjectItem):
     db_project_item = db.query(ProjectsModel.ProjectItem).filter(ProjectsModel.ProjectItem.id == project_item.id).first()
-    db_project_item.position = project_item.position
+    db_project_item.scene = project_item.scene
     db.commit()
     db.refresh(db_project_item)
     return db_project_item

@@ -16,7 +16,6 @@ const computedProjectItems = () => {
 
 const backToProjects = () => {
     router.push('/projects');
-    projectsStore.get_projects_all();
 }
 
 </script>

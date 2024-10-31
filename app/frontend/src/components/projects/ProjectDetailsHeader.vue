@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { nextTick, onBeforeMount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeMount, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { delete_project, update_project } from '~/apis/projects';
 import { useAppStore } from '~/stores/appStore';
@@ -20,6 +20,16 @@ const inputDescriptionRef = ref<HTMLInputElement | null>(null); // 引用输入�
 
 const toggleMenu = () => {
     showMenu.value = !showMenu.value; // 切换菜单显示状态
+};
+
+// 点击外部区域时隐藏菜单
+const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const menuElement = document.querySelector('.project-details-header-name');
+    if (menuElement && !menuElement.contains(target)) {
+        showMenu.value = false; // 隐藏菜单
+    }
+
 };
 
 // 打开重命名弹窗
@@ -79,6 +89,14 @@ const closeDeleteConfirmModal = () => {
     showDeleteConfirmModal.value = false; // 关闭确认弹窗
 };
 
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
+
 </script>
 
 <template>
@@ -131,10 +149,11 @@ const closeDeleteConfirmModal = () => {
             <div class="modal-panel">
                 <div class="modal-panel-header">
                     <div class="modal-panel-header-title">
-                        确认删除
+                        Confirm deletion?
                     </div>
                 </div>
-                <div class="modal-panel-main">您确定要删除此项目吗？</div>
+                <div class="modal-panel-main">Information related to the project will not be recoverable after deletion.
+                </div>
                 <div class="modal-panel-buttons">
                     <div class="modal-panel-buttons-cancel" @click="closeDeleteConfirmModal">Cancel</div>
                     <div class="modal-panel-buttons-confirm" @click="confirmDeleteProject">Confirm</div>

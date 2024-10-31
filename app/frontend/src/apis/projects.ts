@@ -42,7 +42,7 @@ export const get_project_by_id = async (project_id: number) => {
     })
 };
 
-export const get_project_all = async () => {
+export const get_projects_all = async () => {
     return fetchData(`/project/get_all`, {
         method: "GET",
         headers: {

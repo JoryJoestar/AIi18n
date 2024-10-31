@@ -20,6 +20,11 @@ const main_menu_items = [
         link: "/projects"
     },
     {
+        name: "Tools",
+        icon: "book",
+        link: "/tools"
+    },
+    {
         name: "Library",
         icon: "book",
         link: "/library"
@@ -31,9 +36,6 @@ const router = useRouter()
 
 const routeTo = (item: any) => {
     router.push(item.link)
-
-    if (item.name === 'Projects') projectsStore.get_projects_all();
-    
 }
 
 </script>

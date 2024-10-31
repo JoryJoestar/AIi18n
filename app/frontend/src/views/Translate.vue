@@ -2,10 +2,13 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { translate } from '~/apis/translate';
+import { useAppStore } from '~/stores/appStore';
 import { useTranslateStore } from '~/stores/translateStore';
 import { generateUniqueId } from '~/utils/uuid';
 
 const route = useRoute();
+
+const appStore = useAppStore();
 
 const translateStore = useTranslateStore();
 
@@ -15,12 +18,6 @@ const translate_target_language = ref<string>('zh-CN')
 const translate_target_text = ref<string>(''); // 翻译内容
 const isTranslating = ref(false); // 新增状态，跟踪翻译是否正在进行
 
-const messageVisible = ref(false);
-const messageContent = ref(''); // 用于存储消息内容
-const messageDuration = ref(0);
-const messageType = ref<string>('info');
-const messageCloseButtonVisible = ref<boolean>(false);
-
 const showLanguageSelector = ref(false); // 控制语言选择框的显示
 const languageSelector = ref<string>('') // 什么来源选择语言 Source or Target
 const selected_language = ref<string>('')
@@ -29,23 +26,15 @@ const clearSourceText = () => {
     tranlsate_source_text.value = '';
 };
 
-const showMessage = (msg: string, duration: number, type: string) => {
-    messageContent.value = msg;
-    messageDuration.value = duration;
-    messageType.value = type;
-    messageVisible.value = true;
-    messageCloseButtonVisible.value = false;
-};
-
 const copySourceText = () => {
     navigator.clipboard.writeText(tranlsate_source_text.value).then(() => {
-        showMessage('Success', 1500, 'success'); // 显示消息
+        appStore.showMessage('Success', 1500, 'success'); // 显示消息
     });
 
 };
 const copyTargetText = () => {
     navigator.clipboard.writeText(translate_target_text.value).then(() => {
-        showMessage('Success', 1500, 'success'); // 显示消息
+        appStore.showMessage('Success', 1500, 'success'); // 显示消息
     });
 };
 
@@ -81,7 +70,7 @@ const translateFetch = () => {
         }
     }).catch((err) => {
         isTranslating.value = false; // 处理错误时恢复状态
-        showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
+        appStore.showMessage(`Translation failed!\n${err}`, 1500, 'error'); // 显示失败消息
     });
 };
 
@@ -232,8 +221,6 @@ onBeforeUnmount(() => {
         <div class="tranlsate-history">
             <TranslateHistory></TranslateHistory>
         </div>
-        <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration"
-            :close-button-visible="messageCloseButtonVisible" @close="messageVisible = false" />
     </div>
 </template>
 

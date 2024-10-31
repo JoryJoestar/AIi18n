@@ -2,8 +2,11 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from '~/stores/appStore';
+import { useProjectsStore } from '~/stores/projectsStore';
 
 const appStore = useAppStore();
+
+const projectsStore = useProjectsStore();
 
 const main_menu_items = [
     {
@@ -28,6 +31,9 @@ const router = useRouter()
 
 const routeTo = (item: any) => {
     router.push(item.link)
+
+    if (item.name === 'Projects') projectsStore.get_projects_all();
+    
 }
 
 </script>
@@ -39,12 +45,13 @@ const routeTo = (item: any) => {
                 AIi18n
             </div>
             <div class="sidebar-header-toggle">
-                
+
             </div>
         </header>
         <nav class="sidebar-main">
-            <div :class="{ 'active': route.path === item.link || (route.name === 'projectDetails' && item.link === '/projects') }" class="sidebar-main-menu-item"
-                v-for="item, index in main_menu_items" :key="index" @click="routeTo(item)">
+            <div :class="{ 'active': route.path === item.link || (route.name === 'projectDetails' && item.link === '/projects') }"
+                class="sidebar-main-menu-item" v-for="item, index in main_menu_items" :key="index"
+                @click="routeTo(item)">
                 {{ item.name }}
             </div>
         </nav>

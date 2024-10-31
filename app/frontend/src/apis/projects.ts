@@ -25,12 +25,11 @@ export const update_project = async (params: ReqProject) => {
 };
 
 export const delete_project = async (project_id: number) => {
-    return fetchData("/project/delete", {
+    return fetchData(`/project/delete/${project_id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ project_id: project_id }),
     })
 };
 

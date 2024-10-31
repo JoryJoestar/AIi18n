@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import { nextTick, onBeforeMount, onMounted, ref } from 'vue';
-import { update_project } from '~/apis/projects';
+import { useRouter } from 'vue-router';
+import { delete_project, update_project } from '~/apis/projects';
+import { useAppStore } from '~/stores/appStore';
 import { useProjectsStore } from '~/stores/projectsStore';
+
+const appStore = useAppStore();
+
+const router = useRouter();
 
 const projectsStore = useProjectsStore();
 const showMenu = ref(false); // 控制菜单显示的状态
@@ -38,10 +44,8 @@ const confirmRenameProject = () => {
             'name': newName.value,
             'description': newDescription.value
         }
-        console.log(params)
         update_project(params).then((res: ResProject) => {
             projectsStore.project = res
-            projectsStore.get_projects_all();
         }).catch(err => {
             console.error(err)
         })
@@ -62,7 +66,11 @@ const openDeleteConfirmModal = () => {
 // 处理删除项目逻辑
 const confirmDeleteProject = () => {
     // 处理删除项目的逻辑
-
+    if (!projectsStore.project) return
+    delete_project(projectsStore.project?.id).then(res => {
+        appStore.showMessage('DELET SUCCESSFUL', 2500, 'success')
+        router.push('/projects')
+    })
     showDeleteConfirmModal.value = false; // 关闭确认弹窗
 };
 
@@ -70,6 +78,7 @@ const confirmDeleteProject = () => {
 const closeDeleteConfirmModal = () => {
     showDeleteConfirmModal.value = false; // 关闭确认弹窗
 };
+
 </script>
 
 <template>
@@ -240,7 +249,7 @@ const closeDeleteConfirmModal = () => {
             }
 
             &-main {
-                margin: 1rem 0;
+                margin: 1rem .25rem;
             }
 
             input {

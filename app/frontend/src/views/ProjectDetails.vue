@@ -1,19 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useAppStore } from '~/stores/appStore';
 
-const messageVisible = ref(false);
-const messageContent = ref(''); // 用于存储消息内容
-const messageDuration = ref(0);
-const messageType = ref<string>('info');
-const messageCloseButtonVisible = ref<boolean>(false);
+const appStore = useAppStore();
 
-const showMessage = (msg: string, duration: number, type: string) => {
-    messageContent.value = msg;
-    messageDuration.value = duration;
-    messageType.value = type;
-    messageVisible.value = true;
-    messageCloseButtonVisible.value = false;
-};
 </script>
 
 <template>
@@ -36,8 +26,6 @@ const showMessage = (msg: string, duration: number, type: string) => {
         <ProjectUploadBody></ProjectUploadBody>
         <ProjectDownloadBody></ProjectDownloadBody>
 
-        <Message v-if="messageVisible" :message="messageContent" :type="messageType" :duration="messageDuration"
-            :close-button-visible="messageCloseButtonVisible" @close="messageVisible = false" />
     </div>
 </template>
 

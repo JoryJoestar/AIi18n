@@ -22,7 +22,9 @@ const appStore = useAppStore();
             <Main />
             <Settings v-if="appStore.settingsSwitch"></Settings>
         </div>
-
+        <Message v-if="appStore.messageVisible" :message="appStore.messageContent" :type="appStore.messageType"
+            :duration="appStore.messageDuration" :close-button-visible="appStore.messageCloseButtonVisible"
+            @close="appStore.messageVisible = false" />
     </div>
 </template>
 

@@ -3,8 +3,6 @@ import { useProjectsStore } from '~/stores/projectsStore';
 
 const projectsStore = useProjectsStore()
 
-
-
 </script>
 <template>
     <div class="project-data">

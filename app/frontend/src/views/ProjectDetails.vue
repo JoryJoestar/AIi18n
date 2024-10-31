@@ -16,9 +16,6 @@ onBeforeMount(()=>{
 
 <template>
     <div class="projectDetails">
-        <nav class="projectDetails-sidebar">
-            <ProjectDetailsSidebar></ProjectDetailsSidebar>
-        </nav>
         <div class="projectDetails-body">
             <header class="projectDetails-body-header">
                 <ProjectDetailsHeader></ProjectDetailsHeader>

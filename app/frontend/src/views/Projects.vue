@@ -2,8 +2,10 @@
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from '~/stores/projectsStore'; // 导入项目 store
-import { create_project, get_project_by_id, get_project_item_by_id } from '~/apis/projects';
+import { create_project } from '~/apis/projects';
 import { useAppStore } from '~/stores/appStore';
+
+import PageEmpty from '~/assets/page/empty.svg'
 
 const route = useRoute();
 const router = useRouter();
@@ -31,6 +33,7 @@ const newProject = () => {
 
     create_project(newProject).then((res: ResProject) => {
         // 跳转到对应的 projectDetails 页面
+        projectsStore.getProject(res.id);
         router.push({ name: 'projectDetails', params: { id: res.id } });
     })
 };
@@ -70,17 +73,22 @@ onBeforeMount(() => {
                 </div>
             </div>
             <div class="projects-main-body">
-                <div class="projects-main-body-item" v-for="item, index in computedProjects" :key="index"
-                    @click="goToDetails(item.id)">
-                    <div class="projects-main-body-item-name">
-                        {{ item.name }}
+                <div class="projects-main-body-exist" v-if="computedProjects.length > 0">
+                    <div class="projects-main-body-exist-item" v-for="item, index in computedProjects" :key="index"
+                        @click="goToDetails(item.id)">
+                        <div class="projects-main-body-exist-item-name">
+                            {{ item.name }}
+                        </div>
+                        <div class="projects-main-body-exist-item-description">
+                            {{ item.description }}
+                        </div>
+                        <div class="projects-main-body-exist-item-date">
+                            {{ item.created_at }}
+                        </div>
                     </div>
-                    <div class="projects-main-body-item-description">
-                        {{ item.description }}
-                    </div>
-                    <div class="projects-main-body-item-date">
-                        {{ item.created_at }}
-                    </div>
+                </div>
+                <div class="projects-main-body-empty" v-else>
+                    <img :src="PageEmpty" alt="empty">
                 </div>
             </div>
         </main>
@@ -111,9 +119,9 @@ onBeforeMount(() => {
             &-search {
                 display: flex;
                 align-items: center;
-                border: 1px solid rgba(0, 0, 0, 0.2); // 添加边框
+                border: 1px solid rgba(0, 0, 0, 0.25); // 添加边框
                 border-radius: .5rem; // 圆角
-                padding: .5rem .75rem; // 内边距
+                padding: .25rem .5rem; // 内边距
                 transition: border-color .15s ease-in-out;
                 height: 2.5rem;
 
@@ -129,8 +137,8 @@ onBeforeMount(() => {
                 input {
                     border: none; // 去掉输入框的默认边框
                     outline: none; // 去掉输入框的轮廓
-                    padding: .5rem; // 内边距
                     font-size: 1rem; // 字体大小
+                    margin-left: .5rem;
                 }
             }
 
@@ -157,65 +165,78 @@ onBeforeMount(() => {
         }
 
         &-body {
-            display: flex;
-            flex-wrap: wrap; // 允许换行
-            gap: 1rem; // 项目间隔
-
-            &-item {
-                width: calc(20% - .5rem); // 默认每行最多四个项目
-                height: 12rem;
+            &-exist {
                 display: flex;
-                flex-direction: column;
+                flex-wrap: wrap; // 允许换行
+                gap: 1rem; // 项目间隔
+
+                &-item {
+                    width: calc(20% - .5rem); // 默认每行最多四个项目
+                    height: 12rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    border-radius: .5rem;
+                    padding: 1rem;
+                    background-color: white;
+                    cursor: pointer;
+                    transition: all .15s ease-in-out;
+
+                    &-name {
+                        font-size: 1.2rem;
+                    }
+
+                    &-description {
+                        font-size: .9rem;
+                        color: #666;
+                    }
+
+                    &-date {
+                        font-size: .8rem;
+                        color: #999;
+                    }
+                }
+
+                &-item:hover {
+                    background-color: rgba(0, 0, 0, 0.01);
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                }
+
+                @media (max-width: 1680px) {
+                    &-item {
+                        width: calc(25% - .5rem);
+                    }
+                }
+
+                @media (max-width: 1440px) {
+                    &-item {
+                        width: calc(33% - .5rem);
+                    }
+                }
+
+                @media (max-width: 1080px) {
+                    &-item {
+                        width: calc(50% - .5rem);
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    &-item {
+                        width: calc(100%);
+                    }
+                }
+            }
+
+            &-empty {
+                display: flex;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                border-radius: .5rem;
-                padding: 1rem;
-                background-color: white;
-                cursor: pointer;
-                transition: all .15s ease-in-out;
 
-                &-name {
-                    font-size: 1.2rem;
-                }
-
-                &-description {
-                    font-size: .9rem;
-                    color: #666;
-                }
-
-                &-date {
-                    font-size: .8rem;
-                    color: #999;
-                }
-            }
-
-            &-item:hover {
-                background-color: rgba(0, 0, 0, 0.01);
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            }
-
-            @media (max-width: 1680px) {
-                &-item {
-                    width: calc(25% - .5rem);
-                }
-            }
-
-            @media (max-width: 1440px) {
-                &-item {
-                    width: calc(33% - .5rem);
-                }
-            }
-
-            @media (max-width: 1080px) {
-                &-item {
-                    width: calc(50% - .5rem);
-                }
-            }
-
-            @media (max-width: 600px) {
-                &-item {
-                    width: calc(100%);
+                img {
+                    width: 60%;
+                    height: 60%;
                 }
             }
         }

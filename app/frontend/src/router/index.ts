@@ -86,6 +86,7 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
+  
 })
 
 router.afterEach(async (to, from) => {

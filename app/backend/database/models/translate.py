@@ -8,8 +8,6 @@ from sqlalchemy.types import Enum as SQLAEnum
 
 from database.models.projects import ProjectItem
 
-now = datetime.datetime.now(datetime.timezone.utc)
-    
 class LanguageEnum(Enum):
     SIMPLIFY_CHINESE = "zh-CN"
     TRADITIONAL_CHINESE_HONGKONG = "zh-HK"
@@ -44,8 +42,8 @@ class Translate(Base):
     prompt_tokens = Column(Integer)
     output_tokens = Column(Integer)
     
-    created_at = Column(String, default=now, nullable=False)
-    updated_at = Column(String, default=now, onupdate=now, nullable=False)
+    created_at = Column(String, default=datetime.datetime.now(datetime.timezone.utc), nullable=False)
+    updated_at = Column(String, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc), nullable=False)
     
     project_item_id = Column(Integer, ForeignKey('project_item.id'), nullable=True)
     project_item = relationship("ProjectItem", back_populates="translate")
@@ -57,8 +55,8 @@ class Replacement(Base):
     id = Column(Integer, primary_key=True)
     source_content = Column(String, nullable=False)
     replacement = Column(String, nullable=False)
-    created_at = Column(String, default=now, nullable=False)
-    updated_at = Column(String, default=now, onupdate=now, nullable=False)
+    created_at = Column(String, default=datetime.datetime.now(datetime.timezone.utc), nullable=False)
+    updated_at = Column(String, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc), nullable=False)
     
     translate_id = Column(Integer, ForeignKey('translate.id'))
     translate = relationship('Translate', back_populates="replacement")

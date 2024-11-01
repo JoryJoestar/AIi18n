@@ -1,9 +1,9 @@
 type Language = {
-    "local-name": string
-    "zh-name": string
-    "en-name": string
+    "local_name": string
+    "zh_name": string
+    "en_name": string
     "code": string
-    "code-iso639-2": string
+    "code_iso639_2": string
 }
 
 // ===Translate===

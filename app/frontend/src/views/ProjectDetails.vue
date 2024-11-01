@@ -9,8 +9,10 @@ const projectsStore = useProjectsStore();
 
 
 onBeforeMount(()=>{
-    projectsStore.getProjectItemsAll();
+    projectsStore.getProjectItemsAllData();
 })
+
+
 
 </script>
 

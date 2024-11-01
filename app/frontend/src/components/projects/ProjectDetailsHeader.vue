@@ -279,13 +279,13 @@ onUnmounted(() => {
             &-search {
                 display: flex;
                 align-items: center;
-                border: 1px solid rgba(0, 0, 0, 0.25);
+                border: 1px solid rgba(0, 0, 0, 0.1);
                 border-radius: .5rem;
                 transition: border-color .15s ease-in-out;
                 padding: .25rem .5rem;
 
                 &:focus-within {
-                    border: 1px solid rgba(0, 0, 0, 0.5);
+                    border: 1px solid rgba(0, 0, 0, 0.25);
                 }
 
                 svg {

@@ -1,149 +1,149 @@
 [
     {
-        "local-name":"English(US)",
-        "zh-name":"英语(美国)",
-        "en-name":"English(US)",
-        "code":"en-US",
-        "code-iso639-2":"en"
+        "local_name":"English(US)",
+        "zh_name":"英语(美国)",
+        "en_name":"English(US)",
+        "code":"en_US",
+        "code_iso639_2":"en"
     },
     {
-        "local-name": "English(United Kingdom)",
-        "zh-name": "英语(英国)",
-        "en-name": "English(UK)",
-        "code": "en-GB",
-        "code-iso639-2": "en"
+        "local_name": "English(United Kingdom)",
+        "zh_name": "英语(英国)",
+        "en_name": "English(UK)",
+        "code": "en_GB",
+        "code_iso639_2": "en"
     },
     {
-        "local-name":"简体中文",
-        "zh-name":"简体中文",
-        "en-name":"Simplified Chinese",
-        "code":"zh-CN",
-        "code-iso639-2":"zh-Hans"
+        "local_name":"简体中文",
+        "zh_name":"简体中文",
+        "en_name":"Simplified Chinese",
+        "code":"zh_CN",
+        "code_iso639_2":"zh_Hans"
     },
     {
-        "local-name":"繁體中文",
-        "zh-name":"繁体中文",
-        "en-name":"Traditional Chinese",
-        "code":"zh-TW",
-        "code-iso639-2":"zh-Hant"
+        "local_name":"繁體中文",
+        "zh_name":"繁体中文",
+        "en_name":"Traditional Chinese",
+        "code":"zh_TW",
+        "code_iso639_2":"zh_Hant"
     },
     {
-        "local-name":"简体中文(粤语)",
-        "zh-name":"简体中文(粤语)",
-        "en-name":"Simplified Cantonese",
-        "code":"zh-GD",
-        "code-iso639-2":""
+        "local_name":"简体中文(粤语)",
+        "zh_name":"简体中文(粤语)",
+        "en_name":"Simplified Cantonese",
+        "code":"zh_GD",
+        "code_iso639_2":""
     },
     {
-        "local-name":"繁體中文(粤语)",
-        "zh-name":"繁体中文(粤语)",
-        "en-name":"Traditional Cantonese",
-        "code":"zh-HK",
-        "code-iso639-2":""
+        "local_name":"繁體中文(粤语)",
+        "zh_name":"繁体中文(粤语)",
+        "en_name":"Traditional Cantonese",
+        "code":"zh_HK",
+        "code_iso639_2":""
     },
     {
-        "local-name":"Français(Franch)",
-        "zh-name":"法语(法国)",
-        "en-name":"French(Franch)",
-        "code":"fr-FR",
-        "code-iso639-2":"fr"
+        "local_name":"Français(Franch)",
+        "zh_name":"法语(法国)",
+        "en_name":"French(Franch)",
+        "code":"fr_FR",
+        "code_iso639_2":"fr"
     },
     {
-        "local-name": "Français(Canada)",
-        "zh-name": "法语(加拿大)",
-        "en-name": "French(Canada)",
-        "code": "fr-CA",
-        "code-iso639-2": "fr"
+        "local_name": "Français(Canada)",
+        "zh_name": "法语(加拿大)",
+        "en_name": "French(Canada)",
+        "code": "fr_CA",
+        "code_iso639_2": "fr"
     },
     {
-        "local-name": "Español(España)",
-        "zh-name": "西班牙语(西班牙)",
-        "en-name": "Spanish(Spain)",
-        "code": "es-ES",
-        "code-iso639-2": "es"
+        "local_name": "Español(España)",
+        "zh_name": "西班牙语(西班牙)",
+        "en_name": "Spanish(Spain)",
+        "code": "es_ES",
+        "code_iso639_2": "es"
     },
     {
-        "local-name": "Deutsch(Germany)",
-        "zh-name": "德语(德国)",
-        "en-name": "German(Germany)",
-        "code": "de-DE",
-        "code-iso639-2": "de"
+        "local_name": "Deutsch(Germany)",
+        "zh_name": "德语(德国)",
+        "en_name": "German(Germany)",
+        "code": "de_DE",
+        "code_iso639_2": "de"
     },
     {
-        "local-name": "Italiano(Italia)",
-        "zh-name": "意大利语(意大利)",
-        "en-name": "Italian(Italy)",
-        "code": "it-IT",
-        "code-iso639-2": "it"
+        "local_name": "Italiano(Italia)",
+        "zh_name": "意大利语(意大利)",
+        "en_name": "Italian(Italy)",
+        "code": "it_IT",
+        "code_iso639_2": "it"
     },
     {
-        "local-name": "日本語",
-        "zh-name": "日语",
-        "en-name": "Japanese",
-        "code": "ja-JP",
-        "code-iso639-2": "ja"
+        "local_name": "日本語",
+        "zh_name": "日语",
+        "en_name": "Japanese",
+        "code": "ja_JP",
+        "code_iso639_2": "ja"
     },
     {
-        "local-name": "Português(Portugal)",
-        "zh-name": "葡萄牙语(葡萄牙)",
-        "en-name": "Portuguese(Portugal)",
-        "code": "pt-PT",
-        "code-iso639-2": "pt"
+        "local_name": "Português(Portugal)",
+        "zh_name": "葡萄牙语(葡萄牙)",
+        "en_name": "Portuguese(Portugal)",
+        "code": "pt_PT",
+        "code_iso639_2": "pt"
     },
     {
-        "local-name": "Português(Brasil)",
-        "zh-name": "葡萄牙语(巴西)",
-        "en-name": "Portuguese(Brazil)",
-        "code": "pt-BR",
-        "code-iso639-2": "pt"
+        "local_name": "Português(Brasil)",
+        "zh_name": "葡萄牙语(巴西)",
+        "en_name": "Portuguese(Brazil)",
+        "code": "pt_BR",
+        "code_iso639_2": "pt"
     },
     {
-        "local-name": "Русский(Россия)",
-        "zh-name": "俄语(俄罗斯)",
-        "en-name": "Russian(Russia)",
-        "code": "ru-RU",
-        "code-iso639-2": "ru"
+        "local_name": "Русский(Россия)",
+        "zh_name": "俄语(俄罗斯)",
+        "en_name": "Russian(Russia)",
+        "code": "ru_RU",
+        "code_iso639_2": "ru"
     },
     {
-        "local-name": "العربية(مصر)",
-        "zh-name": "阿拉伯语(埃及)",
-        "en-name": "Arabic(Egypt)",
-        "code": "ar-EG",
-        "code-iso639-2": "ar"
+        "local_name": "العربية(مصر)",
+        "zh_name": "阿拉伯语(埃及)",
+        "en_name": "Arabic(Egypt)",
+        "code": "ar_EG",
+        "code_iso639_2": "ar"
     },
     {
-        "local-name": "한국어(대한민국)",
-        "zh-name": "韩语(韩国)",
-        "en-name": "Korean(South Korea)",
-        "code": "ko-KR",
-        "code-iso639-2": "ko"
+        "local_name": "한국어(대한민국)",
+        "zh_name": "韩语(韩国)",
+        "en_name": "Korean(South Korea)",
+        "code": "ko_KR",
+        "code_iso639_2": "ko"
     },
     {
-        "local-name": "Türkçe",
-        "zh-name": "土耳其语",
-        "en-name": "Turkish",
-        "code": "tr-TR",
-        "code-iso639-2": "tr"
+        "local_name": "Türkçe",
+        "zh_name": "土耳其语",
+        "en_name": "Turkish",
+        "code": "tr_TR",
+        "code_iso639_2": "tr"
     },
     {
-        "local-name": "Bahasa Indonesia",
-        "zh-name": "印尼语",
-        "en-name": "Indonesian",
-        "code": "id-ID",
-        "code-iso639-2": "id"
+        "local_name": "Bahasa Indonesia",
+        "zh_name": "印尼语",
+        "en_name": "Indonesian",
+        "code": "id_ID",
+        "code_iso639_2": "id"
     },
     {
-        "local-name": "Nederlands(Nederland)",
-        "zh-name": "荷兰语(荷兰)",
-        "en-name": "Dutch(Netherlands)",
-        "code": "nl-NL",
-        "code-iso639-2": "nl"
+        "local_name": "Nederlands(Nederland)",
+        "zh_name": "荷兰语(荷兰)",
+        "en_name": "Dutch(Netherlands)",
+        "code": "nl_NL",
+        "code_iso639_2": "nl"
     },
     {
-        "local-name": "Català",
-        "zh-name": "加泰罗尼亚语",
-        "en-name": "Catalan",
-        "code": "ca-ES",
-        "code-iso639-2": "ca"
+        "local_name": "Català",
+        "zh_name": "加泰罗尼亚语",
+        "en_name": "Catalan",
+        "code": "ca_ES",
+        "code_iso639_2": "ca"
     }
 ]

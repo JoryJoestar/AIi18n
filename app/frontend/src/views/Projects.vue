@@ -119,14 +119,14 @@ onBeforeMount(() => {
             &-search {
                 display: flex;
                 align-items: center;
-                border: 1px solid rgba(0, 0, 0, 0.25); // 添加边框
+                border: 1px solid rgba(0, 0, 0, 0.1); // 添加边框
                 border-radius: .5rem; // 圆角
                 padding: .25rem .5rem; // 内边距
                 transition: border-color .15s ease-in-out;
                 height: 2.5rem;
 
                 &:focus-within {
-                    border-color: rgba(0, 0, 0, 0.5); // 聚焦时边框颜色变化
+                    border-color: rgba(0, 0, 0, 0.25); // 聚焦时边框颜色变化
                 }
 
                 svg {

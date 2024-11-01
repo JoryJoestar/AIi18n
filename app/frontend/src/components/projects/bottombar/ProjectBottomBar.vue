@@ -8,6 +8,12 @@ const sliderWidth = ref<number>(0);
 const sliderOpacity = ref<number>(1);
 
 const moveSlider = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+
+    const languageSelectorElement = document.querySelector('.project-select-languages-selector');
+    // 检查点击的目标是否在语言选择框或其父元素内
+    if (languageSelectorElement && languageSelectorElement.contains(target)) return
+
     const element = event.target as HTMLElement;
     const offsetParent = element.offsetParent as HTMLElement;
     isMouseInBottomBar.value = true;
@@ -26,11 +32,23 @@ const moveleave = (event: MouseEvent) => {
 <template>
     <div class="project-details-bottom-bar">
         <div class="project-details-bottom-bar-buttons" @mouseleave="moveleave">
-            <div class="slider" :style="{ left: `${sliderLeft}px`, width: `${sliderWidth}px`, opacity: sliderOpacity }"></div>
-            <ProjectUpload class="hover-button" @mouseover="moveSlider"></ProjectUpload>
-            <ProjectTranslate class="hover-button" @mouseover="moveSlider"></ProjectTranslate>
-            <ProjectDownload class="hover-button" @mouseover="moveSlider"></ProjectDownload>
+            <div class="slider" :style="{ left: `${sliderLeft}px`, width: `${sliderWidth}px`, opacity: sliderOpacity }">
+            </div>
+
+            <div class="project-details-bottom-bar-buttons-item">
+                <ProjectUpload class="hover-button" @mouseover="moveSlider"></ProjectUpload>
+                <ProjectAdd class="hover-button" @mouseover="moveSlider"></ProjectAdd>
+            </div>
+
+            <div class="project-details-bottom-bar-buttons-item">
+                <ProjectSelectLanguages class="hover-button" @mouseover="moveSlider"></ProjectSelectLanguages>
+                <ProjectTranslate class="hover-button" @mouseover="moveSlider"></ProjectTranslate>
+            </div>
+            <div class="project-details-bottom-bar-buttons-item">
+                <ProjectDownload class="hover-button" @mouseover="moveSlider"></ProjectDownload>
+            </div>
         </div>
+
     </div>
 </template>
 <style lang="scss">
@@ -39,27 +57,37 @@ const moveleave = (event: MouseEvent) => {
     bottom: 0; // 固定在底部
     left: 50%; // 水平居中
     transform: translateX(-50%); // 使其真正居中
-    width: 100%; // 使其宽度为100%
 
     &-buttons {
-        overflow: hidden;
-        border-radius: .5rem;
         position: fixed;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #555555;
+        gap: .5rem;
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
 
-        .hover-button {
-            position: relative;
-            z-index: 1; // 确保按钮在滑块之上
+        &-item {
+            border-radius: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #555555;
+            color: white;
+            font-size: 1.25rem;
+
+            .hover-button {
+                position: relative;
+                z-index: 1; // 确保按钮在滑块之上
+            }
+
         }
+
 
         .slider {
             position: absolute;
+            border-radius: .5rem;
             height: 2.75rem;
             background-color: rgba(0, 0, 0, .75); // 滑块颜色
             transition: all 0.3s ease; // 平滑过渡

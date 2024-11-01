@@ -13,8 +13,8 @@ const emit = defineEmits(['close', 'language-selected']);
 
 const filteredLanguages = computed(() => {
     return languages.filter(language =>
-        language['zh-name'].toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        language['local-name'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['en-name'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['code'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['code-iso639-2'].toLowerCase().includes(searchQuery.value.toLowerCase())
+        language['zh_name'].toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        language['local_name'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['en_name'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['code'].toLowerCase().includes(searchQuery.value.toLowerCase()) || language['code_iso639_2'].toLowerCase().includes(searchQuery.value.toLowerCase())
     );
 });
 
@@ -41,7 +41,7 @@ const selectLanguage = (language: Language) => {
         <ul class="language-list">
             <li v-for="language in filteredLanguages" :key="language.code">
                 <div @click="selectLanguage(language)" :class="{ selected: props.selectedLanguage === language.code }">
-                    {{ language['zh-name'] }} ({{ language['code'] }})
+                    {{ language['zh_name'] }} ({{ language['code'] }})
                 </div>
             </li>
         </ul>
@@ -66,7 +66,7 @@ const selectLanguage = (language: Language) => {
         margin-bottom: 1rem;
 
         &:focus-within {
-            border-color: rgba(0, 0, 0, 0.5); // 聚焦时边框颜色变化
+            border-color: rgba(0, 0, 0, 0.25); // 聚焦时边框颜色变化
         }
 
         svg {
